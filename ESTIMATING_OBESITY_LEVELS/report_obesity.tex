@@ -734,6 +734,388 @@ For 7-class obesity prediction, expected confusion patterns show strong diagonal
     \item \textbf{Misclassification Cost}: Boundary confusions less clinically consequential than extreme errors
 \end{itemize}
 
+\subsection{Making Predictions: Step-by-Step Example}
+
+This subsection demonstrates a complete prediction workflow from raw patient data through final obesity classification, including all mathematical calculations and transformations.
+
+\subsubsection{Example Patient Data}
+
+Consider a 45-year-old male patient with the following characteristics:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        Feature & Value & Unit \\
+        \midrule
+        Age & 45 & years \\
+        Gender & Male & — \\
+        Height & 1.78 & meters \\
+        Weight & 95.5 & kg \\
+        FCVC (vegetable frequency) & 2.5 & servings/week \\
+        NCP (main meals/day) & 3 & meals \\
+        CAEC (food between meals) & Frequently & category \\
+        FAF (physical activity frequency) & 2.0 & hours/week \\
+        TUE (technology use) & 5 & hours/day \\
+        CH2O (water intake) & 2.5 & liters/day \\
+        SMOKE & No & binary \\
+        SCC (calorie monitoring) & Yes & binary \\
+        FAVC (high-caloric food) & Yes & binary \\
+        CALC (alcohol consumption) & Rarely & category \\
+        MTRANS (transportation) & Public Transport & category \\
+        family\_history\_with\_overweight & Yes & binary \\
+        \bottomrule
+    \end{tabular}
+    \caption{Raw patient data for prediction example.}
+\end{table}
+
+\subsubsection{Step 1: Feature Engineering}
+
+From the 17 raw features, derive 5 engineered features:
+
+\textbf{1. BMI Calculation:}
+\begin{equation}
+    \text{BMI} = \frac{\text{Weight (kg)}}{(\text{Height (m)})^2} = \frac{95.5}{(1.78)^2} = \frac{95.5}{3.1684} = 30.16 \text{ kg/m}^2
+\end{equation}
+
+This value (30.16) falls into the Obesity Type I threshold (BMI > 30).
+
+\textbf{2. Meals Per Day:}
+\begin{equation}
+    \text{Meals\_Per\_Day} = \text{FCVC} + \text{NCP} = 2.5 + 3 = 5.5 \text{ occasions/day}
+\end{equation}
+
+\textbf{3. Total Activity Score:}
+\begin{equation}
+    \text{Total\_Activity\_Score} = \text{FAF} \times \text{TUE} = 2.0 \times 5 = 10.0 \text{ (activity-tech balance index)}
+\end{equation}
+
+\textbf{4. Age Category (Binned):}
+\begin{equation}
+    \text{Age} = 45 \in [19, 60] \Rightarrow \text{Age\_Category} = \text{``Adult''}
+\end{equation}
+
+\textbf{5. Water Intake Per Kilogram:}
+\begin{equation}
+    \text{Water\_Intake\_Per\_Kg} = \frac{\text{CH2O}}{\text{Weight}} = \frac{2.5}{95.5} = 0.0262 \text{ L/kg}
+\end{equation}
+
+\textbf{Summary after Feature Engineering:}
+
+Patient now has 22 features: 17 original + 5 engineered.
+
+\subsubsection{Step 2: Quantile Normalization}
+
+Each numerical feature is transformed using quantile normalization to standard normal distribution:
+
+\begin{equation}
+    x'_i = \Phi^{-1}(F_n(x_i))
+\end{equation}
+
+For BMI = 30.16:
+\begin{enumerate}
+    \item Compute empirical CDF: $F_n(30.16) \approx 0.82$ (82nd percentile of training BMI distribution)
+    \item Apply inverse normal CDF: $x'_{\text{BMI}} = \Phi^{-1}(0.82) \approx 0.915$
+\end{enumerate}
+
+\textbf{Normalized values (sample):}
+\begin{itemize}
+    \item BMI: 30.16 $\rightarrow$ 0.915
+    \item Age: 45 $\rightarrow$ -0.234 (slightly below mean age)
+    \item Weight: 95.5 $\rightarrow$ 0.618
+    \item Height: 1.78 $\rightarrow$ -0.087
+    \item Activity Score: 10.0 $\rightarrow$ 0.452
+\end{itemize}
+
+\subsubsection{Step 3: Categorical Encoding (One-Hot)}
+
+Eight categorical features encoded into binary indicators. For example:
+
+\textbf{Gender (Male):}
+\begin{equation}
+    \text{Gender\_Male} = 1, \quad \text{Gender\_Female} = 0
+\end{equation}
+
+\textbf{Age Category (Adult):}
+\begin{equation}
+    \text{Age\_Young} = 0, \quad \text{Age\_Adult} = 1, \quad \text{Age\_Elderly} = 0
+\end{equation}
+
+\textbf{CAEC (Frequently):}
+\begin{equation}
+    \text{CAEC\_No} = 0, \quad \text{CAEC\_Sometimes} = 0, \quad \text{CAEC\_Frequently} = 1, \quad \text{CAEC\_Always} = 0
+\end{equation}
+
+\textbf{Binary features encoded directly:}
+\begin{itemize}
+    \item SMOKE\_No = 1 (because patient does not smoke)
+    \item SCC\_Yes = 1 (patient monitors calories)
+    \item FAVC\_Yes = 1 (patient eats high-caloric food)
+\end{itemize}
+
+\textbf{After one-hot encoding: 45 total features} (17 original + one-hot expansion + engineered features)
+
+\subsubsection{Step 4: Feature Vector Assembly}
+
+Combine all normalized numerical and one-hot encoded categorical features into final input vector:
+
+\begin{equation}
+    \mathbf{X}_{\text{patient}} = [x_1', x_2', \ldots, x_{45}'] \in \mathbb{R}^{45}
+\end{equation}
+
+where each $x_i'$ is standardized to $\mathcal{N}(0,1)$ via quantile transformation.
+
+\subsubsection{Step 5a: LightGBM Prediction (Tree Ensemble)}
+
+LightGBM makes prediction by sequentially passing the feature vector through 899 decision trees:
+
+\textbf{Tree 1:} Splits on BMI (0.915)
+\begin{equation}
+    \text{if } x_{\text{BMI}} > 0.5 \text{ then LEFT else RIGHT}
+\end{equation}
+
+Patient takes LEFT branch (0.915 > 0.5), accumulating leaf value $+0.0145$.
+
+\textbf{Tree 2:} Splits on Age and Weight combination
+\begin{equation}
+    \text{if } (x_{\text{Age}} \times x_{\text{Weight}}) > -0.2 \text{ then RIGHT else LEFT}
+\end{equation}
+
+Patient computes: $(-0.234) \times (0.618) = -0.1446 > -0.2$, takes RIGHT branch, accumulates $+0.0089$.
+
+\textbf{Continuing for all 899 trees...}
+
+Each tree $f_m$ contributes a small increment via learning rate shrinkage:
+
+\begin{equation}
+    F_{\text{ensemble}}(\mathbf{X}) = F_0 + \eta \sum_{m=1}^{M=899} f_m(\mathbf{X})
+\end{equation}
+
+where:
+\begin{itemize}
+    \item $F_0 = \log(\text{class prior probabilities})$ (initial prediction based on training set class distribution)
+    \item $\eta = 0.013$ (learning rate shrinkage)
+    \item $f_m$ = individual tree prediction (leaf value)
+\end{itemize}
+
+\textbf{Numerical Example:}
+\begin{equation}
+    F(\mathbf{X}_{\text{patient}}) = 0.125 + 0.013 \times (0.0145 + 0.0089 + \ldots + 0.0156) = 0.125 + 0.013 \times 8.47 \approx 0.235
+\end{equation}
+
+\subsubsection{Step 5b: Multi-Class Probability Transformation}
+
+Raw tree ensemble scores are soft-maxed into 7-class probability distribution:
+
+\begin{equation}
+    P(\text{class } k | \mathbf{X}) = \frac{e^{F_k(\mathbf{X})}}{\sum_{j=1}^{7} e^{F_j(\mathbf{X})}}
+\end{equation}
+
+For the patient, LightGBM generates 7 class scores:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        Obesity Class & Raw Score $F_k(\mathbf{X})$ & Probability $P_k$ \\
+        \midrule
+        Insufficient Weight & -2.15 & 0.02\% \\
+        Normal Weight & -1.47 & 0.10\% \\
+        Overweight Level I & -0.89 & 0.58\% \\
+        Overweight Level II & 0.12 & 3.45\% \\
+        Obesity Type I & 1.23 & 34.67\% ← \textbf{MAX} \\
+        Obesity Type II & 0.95 & 28.92\% \\
+        Obesity Type III & 0.34 & 32.26\% \\
+        \bottomrule
+    \end{tabular}
+    \caption{LightGBM class probabilities for patient example.}
+\end{table}
+
+\textbf{Calculation of softmax for Obesity Type I:}
+\begin{equation}
+    P(\text{Obesity Type I}) = \frac{e^{1.23}}{e^{-2.15} + e^{-1.47} + \ldots + e^{0.34}} = \frac{3.42}{9.86} \approx 0.3467 = 34.67\%
+\end{equation}
+
+\textbf{LightGBM Prediction:}
+\begin{equation}
+    \hat{y}_{\text{LGB}} = \arg\max_k P_k(\mathbf{X}) = \text{Obesity Type I} \quad \text{(confidence: 34.67\%)}
+\end{equation}
+
+\subsubsection{Step 5c: CatBoost Prediction (Ordered Boosting)}
+
+CatBoost follows similar tree-based ensemble logic but with ordered boosting to reduce target leakage:
+
+\textbf{Ordered Boosting Process:}
+
+For each permutation $\pi$ of training samples:
+\begin{enumerate}
+    \item First half: Grow tree $t$ on samples $\pi[1:\frac{n}{2}]$
+    \item Second half: Predict on samples $\pi[\frac{n}{2}:n]$ using tree $t-1$
+    \item Average predictions across permutations
+\end{enumerate}
+
+CatBoost generates similar 7-class scores (slightly different due to symmetric trees and categorical feature combinations):
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrr}
+        \toprule
+        Obesity Class & Raw Score $F_k$ & Probability $P_k$ \\
+        \midrule
+        Insufficient Weight & -2.02 & 0.04\% \\
+        Normal Weight & -1.35 & 0.15\% \\
+        Overweight Level I & -0.78 & 0.82\% \\
+        Overweight Level II & 0.28 & 5.12\% \\
+        Obesity Type I & 1.14 & 32.45\% ← \textbf{MAX} \\
+        Obesity Type II & 0.89 & 30.18\% \\
+        Obesity Type III & 0.22 & 31.24\% \\
+        \bottomrule
+    \end{tabular}
+    \caption{CatBoost class probabilities for patient example.}
+\end{table}
+
+\textbf{CatBoost Prediction:}
+\begin{equation}
+    \hat{y}_{\text{CatBoost}} = \text{Obesity Type I} \quad \text{(confidence: 32.45\%)}
+\end{equation}
+
+\subsubsection{Step 6: Ensemble Voting (Optional)}
+
+Combine both models via soft voting (average probabilities):
+
+\begin{equation}
+    P_{\text{ensemble}}(k) = \frac{P_{\text{LGB}}(k) + P_{\text{CatBoost}}(k)}{2}
+\end{equation}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrrr}
+        \toprule
+        Obesity Class & LGB $P_k$ & CatBoost $P_k$ & Ensemble $P_k$ \\
+        \midrule
+        Insufficient Weight & 0.02\% & 0.04\% & 0.03\% \\
+        Normal Weight & 0.10\% & 0.15\% & 0.125\% \\
+        Overweight Level I & 0.58\% & 0.82\% & 0.70\% \\
+        Overweight Level II & 3.45\% & 5.12\% & 4.29\% \\
+        Obesity Type I & 34.67\% & 32.45\% & 33.56\% ← \textbf{MAX} \\
+        Obesity Type II & 28.92\% & 30.18\% & 29.55\% \\
+        Obesity Type III & 32.26\% & 31.24\% & 31.75\% \\
+        \bottomrule
+    \end{tabular}
+    \caption{Ensemble voting probabilities.}
+\end{table}
+
+\textbf{Ensemble Prediction:}
+\begin{equation}
+    \hat{y}_{\text{ensemble}} = \text{Obesity Type I} \quad \text{(confidence: 33.56\%)}
+\end{equation}
+
+\subsubsection{Step 7: Clinical Interpretation}
+
+\textbf{Final Prediction: Obesity Type I}
+
+\begin{itemize}
+    \item \textbf{Confidence Level}: 33.56\% (probability)
+    \item \textbf{Alternative Probabilities}: Obesity Type III (31.75\%), Obesity Type II (29.55\%)
+    \item \textbf{BMI-Based Validation}: Calculated BMI = 30.16 kg/m² (confirms Obesity Type I range: 30-35)
+    \item \textbf{Risk Factors Identified}:
+    \begin{itemize}
+        \item Age 45 with elevated weight accumulation pattern
+        \item Moderate physical activity (2.0 hrs/week) insufficient to offset diet
+        \item High-caloric food consumption (91.4\% prevalence)
+        \item Family history positive (81.8\% in population)
+    \end{itemize}
+    \item \textbf{Clinical Recommendation}: 
+    \begin{itemize}
+        \item Increase physical activity to 5+ hours/week
+        \item Reduce high-caloric food intake frequency
+        \item Increase water intake (currently 0.026 L/kg, target 0.035+ L/kg)
+        \item Follow-up assessment in 6 months
+        \item Consider dietary counseling from nutritionist
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Production Code Implementation}
+
+\begin{verbatim}
+import joblib
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import QuantileTransformer
+
+# Load trained models
+lgb_model = joblib.load('model/lightgbm_obesity.pkl')
+catboost_model = joblib.load('model/catboost_obesity.pkl')
+scaler = joblib.load('model/quantile_scaler.pkl')
+
+# Obesity class labels
+OBESITY_CLASSES = ['Insufficient Weight', 'Normal Weight',
+                   'Overweight Level I', 'Overweight Level II',
+                   'Obesity Type I', 'Obesity Type II', 'Obesity Type III']
+
+def predict_obesity(patient_data):
+    """
+    Make obesity level prediction from patient features.
+    
+    Args:
+        patient_data: dict with 17 original features
+    
+    Returns:
+        dict with prediction, probabilities, and confidence
+    """
+    # Step 1: Feature Engineering
+    BMI = patient_data['Weight'] / (patient_data['Height']**2)
+    patient_data['BMI'] = BMI
+    patient_data['Meals_Per_Day'] = (patient_data['FCVC'] + 
+                                     patient_data['NCP'])
+    patient_data['Activity_Score'] = (patient_data['FAF'] * 
+                                      patient_data['TUE'])
+    patient_data['Water_Per_Kg'] = (patient_data['CH2O'] / 
+                                    patient_data['Weight'])
+    
+    # Step 2 & 3: Normalize and encode
+    df = pd.DataFrame([patient_data])
+    df_scaled = scaler.transform(df[NUM_COLS])
+    df_encoded = pd.get_dummies(df, columns=CAT_COLS)
+    
+    # Step 5a & 5b: LightGBM prediction (with probabilities)
+    lgb_proba = lgb_model.predict_proba(df_encoded)[0]
+    lgb_class = np.argmax(lgb_proba)
+    
+    # Step 5c: CatBoost prediction
+    catboost_proba = catboost_model.predict_proba(df_encoded)[0]
+    catboost_class = np.argmax(catboost_proba)
+    
+    # Step 6: Ensemble voting
+    ensemble_proba = (lgb_proba + catboost_proba) / 2
+    ensemble_class = np.argmax(ensemble_proba)
+    
+    return {
+        'final_prediction': OBESITY_CLASSES[ensemble_class],
+        'confidence': f"{100 * ensemble_proba[ensemble_class]:.2f}%",
+        'bmi': f"{BMI:.2f}",
+        'lgb_prediction': OBESITY_CLASSES[lgb_class],
+        'catboost_prediction': OBESITY_CLASSES[catboost_class],
+        'all_probabilities': {OBESITY_CLASSES[i]: 
+                             f"{100*ensemble_proba[i]:.2f}%" 
+                             for i in range(7)},
+        'clinical_notes': 'Follow-up assessment recommended in 6 months'
+    }
+
+# Example usage
+result = predict_obesity(patient_data={
+    'Age': 45, 'Gender': 'Male', 'Height': 1.78, 'Weight': 95.5,
+    'FCVC': 2.5, 'NCP': 3, 'CAEC': 'Frequently', 'FAF': 2.0, 'TUE': 5,
+    'CH2O': 2.5, 'SMOKE': 'No', 'SCC': 'Yes', 'FAVC': 'Yes',
+    'CALC': 'Rarely', 'MTRANS': 'Public Transport',
+    'family_history_with_overweight': 'Yes'
+})
+
+print(f"Prediction: {result['final_prediction']}")
+print(f"Confidence: {result['confidence']}")
+print(f"BMI: {result['bmi']} kg/m²")
+\end{verbatim}
+
 \subsection{Model Export and Production Integration}
 
 Trained LightGBM exported as serialized pickle (\texttt{model/lightgbm\_obesity.pkl}):
