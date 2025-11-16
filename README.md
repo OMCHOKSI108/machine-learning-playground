@@ -4,4 +4,5 @@ This repository serves as a playground for various machine learning projects, sh
 
 | Project Number | Project Title | Regression or Classification | Folder |
 |----------------|----------------|------------------------------|--------|
-| 1 | Bank Marketing Dataset Classification | Classification | [BANK_MARKETING/](BANK_MARKETING/) | 
+| 1 | [Bank Marketing Dataset Classification](https://www.kaggle.com/code/omchoksi04/bank-marketing-dataset) | Classification | [BANK_MARKETING/](BANK_MARKETING/) |
+| 2 | [Estimating Obesity Classification](https://www.kaggle.com/code/omchoksi04/estimating-obesity-classification) | Classification | [ESTIMATING_OBESITY_LEVELS/](ESTIMATING_OBESITY_LEVELS/) | 
