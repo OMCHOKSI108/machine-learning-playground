@@ -1,3 +1,5 @@
-# Machine Learning Playground 
+ML projects playground
 
-contains jupyter notebooks 
+| Project Number | Project Title | Regression or Classification | Folder Link |
+|----------------|----------------|------------------------------|-------------|
+| 1 | Bank Marketing Dataset Classification | Classification | BANK_MARKETING/ | 
