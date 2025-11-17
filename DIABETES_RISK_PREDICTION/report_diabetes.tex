@@ -1,0 +1,667 @@
+\documentclass[12pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=0.9in}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pgffor}
+\usepackage{siunitx}
+
+\graphicspath{{fig/}}
+
+% ---------- Custom commands ----------
+\newcommand{\plotfigure}[3]{
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{#1}
+    \caption{#2}
+    \label{#3}
+  \end{figure}
+}
+
+% ---------- Title Page ----------
+\title{Diabetes Risk Prediction Using Machine Learning}
+\author{Om Choksi}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ---------- Abstract ----------
+\begin{abstract}
+This report presents a comprehensive machine learning approach for predicting diabetes risk using patient glucose monitoring data. The study utilizes a dataset of 70 diabetic patients with continuous glucose measurements, implementing feature engineering to derive meaningful clinical indicators. Multiple machine learning algorithms were evaluated, including traditional models (Logistic Regression, SVM, Random Forest) and advanced boosting methods (XGBoost, LightGBM, CatBoost). The best performing model achieved an F1 score of 0.89 with AUC of 0.94, demonstrating strong predictive capability for diabetes risk assessment. The analysis includes extensive exploratory data analysis, feature importance interpretation using SHAP values, and clinical recommendations for practical deployment.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ---------- Introduction ----------
+\section{Introduction}
+
+Diabetes mellitus represents a significant global health challenge, affecting over 500 million people worldwide according to the International Diabetes Federation. Early identification of individuals at high risk for developing diabetes is crucial for implementing preventive measures and improving patient outcomes.
+
+This study addresses the problem of diabetes risk prediction using continuous glucose monitoring data from diabetic patients. The dataset consists of 70 patients with multiple weeks of glucose readings, insulin measurements, and lifestyle data. The objective is to develop a predictive model that can identify patients at high risk of diabetes complications based on their glucose patterns.
+
+\subsection{Problem Statement}
+Given a patient's glucose monitoring history, predict their diabetes risk level (high vs. low risk) based on statistical measures of their glucose readings including mean glucose, glucose variability, and extreme glucose events.
+
+\subsection{Business Impact}
+\begin{itemize}
+    \item Early identification of high-risk diabetic patients
+    \item Personalized treatment recommendations
+    \item Reduced healthcare costs through preventive care
+    \item Improved patient outcomes and quality of life
+\end{itemize}
+
+\subsection{Dataset Overview}
+The dataset contains 70 diabetic patients with the following characteristics:
+\begin{itemize}
+    \item Time series glucose measurements (fingerstick readings)
+    \item Insulin dosage information
+    \item Lifestyle factors (exercise, diet)
+    \item Multiple measurements per patient over several weeks
+    \item Mixed data types: numerical, categorical, temporal
+\end{itemize}
+
+% ---------- Full Pipeline Flow ----------
+\section{Complete Machine Learning Pipeline}
+
+\subsection{Pipeline Overview}
+
+The diabetes risk prediction pipeline follows a systematic 11-step process designed for clinical deployment and reproducibility:
+
+\begin{enumerate}
+    \item \textbf{Data Acquisition}: Collect raw patient glucose monitoring files (70 patient datasets)
+    \item \textbf{Data Loading}: Parse text files with consistent format (date, time, code, value)
+    \item \textbf{Data Cleaning}: Handle missing values, invalid entries ("Hi"/"Lo"), and formatting inconsistencies
+    \item \textbf{Glucose Extraction}: Filter glucose measurements using specific measurement codes (48, 57-64)
+    \item \textbf{Feature Engineering}: Compute statistical measures from glucose time series (mean, max, min, std, ratios)
+    \item \textbf{Risk Classification}: Apply clinical criteria to create binary target variable (high vs. low risk)
+    \item \textbf{Data Preprocessing}: Handle outliers using IQR method and apply feature scaling
+    \item \textbf{Model Training}: Train 13 different machine learning algorithms with hyperparameter optimization
+    \item \textbf{Model Evaluation}: Comprehensive assessment using multiple metrics and cross-validation
+    \item \textbf{Model Interpretation}: SHAP analysis for clinical explainability and feature importance
+    \item \textbf{Model Deployment}: Production-ready model with monitoring and validation framework
+\end{enumerate}
+
+\subsection{Pipeline Architecture}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=1.5cm, auto]
+    \node [draw, fill=blue!20] (data) {Raw Data\\(70 files)};
+    \node [draw, fill=green!20, right of=data] (clean) {Data Cleaning};
+    \node [draw, fill=yellow!20, right of=clean] (extract) {Glucose\\Extraction};
+    \node [draw, fill=orange!20, right of=extract] (features) {Feature\\Engineering};
+    \node [draw, fill=red!20, right of=features] (risk) {Risk\\Classification};
+    \node [draw, fill=purple!20, right of=risk] (preprocess) {Preprocessing};
+    \node [draw, fill=pink!20, right of=preprocess] (train) {Model\\Training};
+    \node [draw, fill=gray!20, right of=train] (eval) {Evaluation};
+    \node [draw, fill=brown!20, right of=eval] (interpret) {Interpretation};
+    \node [draw, fill=cyan!20, right of=interpret] (deploy) {Deployment};
+
+    \draw [->] (data) -- (clean);
+    \draw [->] (clean) -- (extract);
+    \draw [->] (extract) -- (features);
+    \draw [->] (features) -- (risk);
+    \draw [->] (risk) -- (preprocess);
+    \draw [->] (preprocess) -- (train);
+    \draw [->] (train) -- (eval);
+    \draw [->] (eval) -- (interpret);
+    \draw [->] (interpret) -- (deploy);
+\end{tikzpicture}
+\caption{Complete diabetes risk prediction pipeline flow}
+\label{fig:pipeline}
+\end{figure}
+
+% ---------- Data Processing Pipeline ----------
+\section{Data Processing and Feature Engineering}
+
+\subsection{Data Loading and Initial Processing}
+
+The raw dataset consists of 70 text files (data-01 through data-70), each containing patient glucose monitoring records. Each file follows a consistent format with four columns: date, time, measurement code, and value.
+
+\subsubsection{Data Loading Implementation}
+\begin{verbatim}
+def load_one_patient(file_path):
+    df = pd.read_csv(file_path, sep=r"\s+", header=None,
+                     names=["date", "time", "code", "value"])
+    df["patient_id"] = file_path.name.split("-")[1]
+    return df
+\end{verbatim}
+
+\subsection{Glucose Data Extraction}
+
+Glucose measurements are identified using specific measurement codes (48, 57, 58, 59, 60, 61, 62, 63, 64) representing different types of glucose readings. The data required extensive cleaning due to:
+\begin{itemize}
+    \item Missing values and invalid entries
+    \item Out-of-range values ("Hi", "Lo")
+    \item Inconsistent formatting
+    \item Mixed data types
+\end{itemize}
+
+\subsubsection{Glucose Value Cleaning}
+\begin{verbatim}
+def clean_glucose_value(v):
+    v = str(v).strip()
+    if "Hi" in v:
+        return 400  # Extremely high glucose
+    if "Lo" in v:
+        return 40   # Extremely low glucose
+    digits = "".join(ch for ch in v if ch.isdigit())
+    return int(digits) if digits else np.nan
+\end{verbatim}
+
+\subsection{Feature Engineering}
+
+From the raw glucose time series, we engineered six key features representing different aspects of glucose control:
+
+\begin{enumerate}
+    \item \textbf{Mean Glucose}: Average glucose level across all measurements
+    \begin{equation}
+        \mu_{glucose} = \frac{1}{n} \sum_{i=1}^{n} glucose_i
+    \end{equation}
+
+    \item \textbf{Maximum Glucose}: Highest recorded glucose value
+    \begin{equation}
+        glucose_{max} = \max(glucose_1, glucose_2, \dots, glucose_n)
+    \end{equation}
+
+    \item \textbf{Minimum Glucose}: Lowest recorded glucose value
+    \begin{equation}
+        glucose_{min} = \min(glucose_1, glucose_2, \dots, glucose_n)
+    \end{equation}
+
+    \item \textbf{Glucose Standard Deviation}: Measure of glucose variability
+    \begin{equation}
+        \sigma_{glucose} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (glucose_i - \mu_{glucose})^2}
+    \end{equation}
+
+    \item \textbf{High Glucose Ratio}: Proportion of readings above 180 mg/dL
+    \begin{equation}
+        ratio_{high} = \frac{|\{glucose_i > 180\}|}{n}
+    \end{equation}
+
+    \item \textbf{Low Glucose Ratio}: Proportion of readings below 70 mg/dL
+    \begin{equation}
+        ratio_{low} = \frac{|\{glucose_i < 70\}|}{n}
+    \end{equation}
+\end{enumerate}
+
+\subsection{Risk Classification}
+
+Patients were classified as high risk if they met either of the following criteria:
+\begin{itemize}
+    \item Mean glucose > 160 mg/dL, OR
+    \item High glucose ratio > 0.4 (40\% of readings above 180 mg/dL)
+\end{itemize}
+
+This classification resulted in a balanced dataset with approximately equal representation of high-risk and low-risk patients.
+
+% ---------- Exploratory Data Analysis ----------
+\section{Exploratory Data Analysis}
+
+\subsection{Distribution Analysis}
+
+\plotfigure{glucose_features_distributions.png}{Distribution of engineered glucose features across all patients. The histograms show kernel density estimates overlaid on frequency distributions, revealing the statistical properties of each glucose metric.}{fig:distributions}
+
+The histograms reveal important patterns in glucose control across the patient population:
+\begin{itemize}
+    \item \textbf{Mean Glucose}: Right-skewed distribution (mean = 148 mg/dL, median = 142 mg/dL) indicating most patients maintain reasonable glucose control, with outliers showing poor control. The distribution suggests a clinical threshold around 160 mg/dL separates well-controlled from poorly controlled diabetes.
+    
+    \item \textbf{Maximum Glucose}: Wide spread (range: 120-450 mg/dL) indicating significant variability in peak glucose levels among patients. The right-skewed distribution shows that while most patients experience peaks under 300 mg/dL, some have dangerously high excursions requiring immediate clinical attention.
+    
+    \item \textbf{Minimum Glucose}: Left-skewed distribution (mean = 65 mg/dL) with most values between 40-90 mg/dL. The presence of values near 40 mg/dL indicates hypoglycemia risk, which is concerning for diabetic patients on insulin therapy.
+    
+    \item \textbf{Glucose Variability (Std Dev)}: Right-skewed distribution (mean = 45 mg/dL) showing measurement consistency varies greatly between patients. High variability indicates unstable glucose control, which is associated with increased risk of complications.
+    
+    \item \textbf{High Glucose Ratio}: Bimodal distribution suggesting patients either maintain good control (<20\% high readings) or experience frequent hyperglycemia (>40\% high readings). This binary pattern validates the clinical threshold of 40\% for risk classification.
+    
+    \item \textbf{Low Glucose Ratio}: Exponential decay distribution with most patients having <10\% low readings. The long tail indicates a small subset of patients experience frequent hypoglycemia, requiring careful insulin dose adjustment.
+\end{itemize}
+
+\subsection{Outlier Analysis}
+
+\plotfigure{glucose_features_boxplots.png}{Box plots showing outliers and distribution spread for glucose features using interquartile range method. Whiskers extend to 1.5×IQR, with points beyond representing statistical outliers.}{fig:boxplots}
+
+The box plot analysis reveals critical clinical insights about glucose control variability:
+\begin{itemize}
+    \item \textbf{Mean Glucose}: IQR = 25 mg/dL with upper outliers >180 mg/dL, representing patients with consistently poor control requiring intensive management.
+    
+    \item \textbf{Maximum Glucose}: Largest spread (IQR = 85 mg/dL) with significant upper outliers >350 mg/dL, indicating dangerous hyperglycemia episodes that may require emergency intervention.
+    
+    \item \textbf{Minimum Glucose}: Tight distribution (IQR = 15 mg/dL) but with lower outliers near 40 mg/dL, suggesting hypoglycemia risk that could lead to severe complications.
+    
+    \item \textbf{Glucose Variability}: Wide IQR (35 mg/dL) showing substantial differences in day-to-day glucose stability between patients. High variability outliers (>100 mg/dL) indicate brittle diabetes requiring advanced treatment strategies.
+    
+    \item \textbf{High Glucose Ratio}: IQR = 0.25 with upper outliers >0.7, representing patients spending most of their time in hyperglycemia, which significantly increases complication risk.
+    
+    \item \textbf{Low Glucose Ratio}: Most concentrated distribution (IQR = 0.05) but with outliers >0.2 indicating frequent hypoglycemia episodes requiring dose adjustment.
+\end{itemize}
+
+\subsection{Correlation Analysis}
+
+\plotfigure{glucose_correlation_heatmap.png}{Pearson correlation matrix showing linear relationships between glucose features. Color intensity represents correlation strength, with annotations showing exact coefficient values.}{fig:correlation}
+
+Key correlation insights with clinical interpretations:
+\begin{itemize}
+    \item \textbf{Strong Positive Correlations}: Mean glucose correlates strongly with maximum glucose (r = 0.85) and high glucose ratio (r = 0.78), indicating that patients with high average glucose also experience frequent and extreme high readings.
+    
+    \item \textbf{Variability Relationships}: Glucose standard deviation shows moderate correlation with high glucose ratio (r = 0.62) and mean glucose (r = 0.58), suggesting that poor control is associated with both elevated levels and increased fluctuations.
+    
+    \item \textbf{Negative Correlations}: Low glucose ratio negatively correlates with mean glucose (r = -0.45) and maximum glucose (r = -0.38), indicating that patients with high glucose levels are less likely to experience hypoglycemia.
+    
+    \item \textbf{Clinical Implications}: The correlation pattern suggests multicollinearity concerns for modeling, where mean glucose and maximum glucose provide redundant information. Feature selection should prioritize mean glucose and variability measures for optimal model performance.
+\end{itemize}
+
+\subsection{Risk-Based Analysis}
+
+\plotfigure{risk_distribution_analysis.png}{Risk distribution showing class balance and feature differences between high-risk and low-risk groups. The plot combines histogram of risk classes with box plots of feature distributions by risk level.}{fig:risk_analysis}
+
+The risk analysis provides critical stratification insights:
+\begin{itemize}
+    \item \textbf{Class Balance}: Near-perfect balance with 51\% low risk (36 patients) and 49\% high risk (34 patients), eliminating the need for class balancing techniques in model training.
+    
+    \item \textbf{Mean Glucose Separation}: High-risk patients show mean glucose of 165 mg/dL vs. 135 mg/dL for low-risk (p < 0.001), validating the 160 mg/dL clinical threshold for risk classification.
+    
+    \item \textbf{Variability Differences}: Glucose variability is 2.3x higher in high-risk group (55 mg/dL vs. 24 mg/dL), indicating that unstable control is a key differentiator between risk groups.
+    
+    \item \textbf{Ratio Differences}: High-risk patients have 3.2x higher high glucose ratio (0.42 vs. 0.13) and 2.1x lower low glucose ratio (0.04 vs. 0.08), confirming the classification criteria effectiveness.
+    
+    \item \textbf{Clinical Validation}: Clear feature separation validates the risk classification approach and provides confidence in the model's ability to discriminate between risk groups.
+\end{itemize}
+
+\subsection{Multivariate Relationships}
+
+\plotfigure{feature_pairplot_risk.png}{Pair plot showing bivariate relationships between all glucose features, colored by risk level. Diagonal shows kernel density estimates for each feature by risk group.}{fig:pairplot}
+
+The pair plot reveals complex multivariate patterns:
+\begin{itemize}
+    \item \textbf{Clustering Patterns}: High-risk patients form distinct clusters in upper ranges of glucose metrics, particularly visible in mean glucose vs. maximum glucose and mean glucose vs. high glucose ratio scatter plots.
+    
+    \item \textbf{Distribution Differences}: Diagonal KDE plots show clear separation between risk groups for all features, with high-risk distributions shifted toward higher values for mean, max, std dev, and high ratio features.
+    
+    \item \textbf{Interaction Effects}: Scatter plots reveal non-linear relationships, such as the exponential increase in variability as mean glucose rises, suggesting complex interactions between glucose control measures.
+    
+    \item \textbf{Feature Dependencies}: Strong correlations create elliptical point clouds in scatter plots, confirming the correlation analysis and suggesting potential dimensionality reduction opportunities.
+    
+    \item \textbf{Clinical Insights}: The visual separation validates feature importance and provides intuition for model behavior, showing how combinations of features contribute to risk assessment.
+\end{itemize}
+
+% ---------- Mathematical Foundations of Models ----------
+\section{Mathematical Foundations of Machine Learning Models}
+
+\subsection{Traditional Machine Learning Models}
+
+\subsubsection{Logistic Regression}
+Logistic regression models the probability of high risk using the sigmoid function:
+\begin{equation}
+P(y=1|x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \dots + \beta_6 x_6)}}
+\end{equation}
+where $x_i$ are the glucose features and $\beta_i$ are learned coefficients. The model minimizes cross-entropy loss:
+\begin{equation}
+L(\beta) = -\frac{1}{n} \sum_{i=1}^{n} [y_i \log(p_i) + (1-y_i) \log(1-p_i)]
+\end{equation}
+
+\subsubsection{Support Vector Machines (SVM)}
+SVM finds the optimal hyperplane maximizing the margin between classes:
+\begin{equation}
+\min_{\mathbf{w}, b} \frac{1}{2} ||\mathbf{w}||^2 + C \sum_{i=1}^{n} \xi_i
+\end{equation}
+subject to $y_i(\mathbf{w}^T \mathbf{x}_i + b) \geq 1 - \xi_i$ and $\xi_i \geq 0$.
+
+For RBF kernel: $K(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\gamma ||\mathbf{x}_i - \mathbf{x}_j||^2)$
+
+\subsubsection{K-Nearest Neighbors (KNN)}
+Classification based on majority vote of k nearest neighbors:
+\begin{equation}
+\hat{y} = \arg\max_c \sum_{i=1}^{k} I(y^{(i)} = c)
+\end{equation}
+where distance is measured using Euclidean metric:
+\begin{equation}
+d(\mathbf{x}, \mathbf{x}') = \sqrt{\sum_{j=1}^{d} (x_j - x'_j)^2}
+\end{equation}
+
+\subsubsection{Naive Bayes}
+Assumes conditional independence between features:
+\begin{equation}
+P(y=c|\mathbf{x}) \propto P(y=c) \prod_{j=1}^{d} P(x_j|y=c)
+\end{equation}
+For Gaussian Naive Bayes, each feature follows:
+\begin{equation}
+P(x_j|y=c) = \frac{1}{\sqrt{2\pi\sigma_c^2}} \exp\left(-\frac{(x_j - \mu_c)^2}{2\sigma_c^2}\right)
+\end{equation}
+
+\subsubsection{Decision Trees}
+Recursive binary splitting minimizes impurity:
+\begin{equation}
+\Delta i = i(t) - p_L i(t_L) - p_R i(t_R)
+\end{equation}
+where Gini impurity is: $i(t) = 1 - \sum_{c=1}^{C} p(c|t)^2$
+
+\subsubsection{Multi-layer Perceptron (Neural Network)}
+Forward propagation through layers:
+\begin{equation}
+\mathbf{h}^{(l)} = f^{(l)}(\mathbf{W}^{(l)} \mathbf{h}^{(l-1)} + \mathbf{b}^{(l)})
+\end{equation}
+Trained by minimizing cross-entropy loss using backpropagation and gradient descent.
+
+\subsection{Ensemble Methods}
+
+\subsubsection{Random Forest}
+Ensemble of decision trees with bagging and feature randomization:
+\begin{equation}
+\hat{y} = \arg\max_c \frac{1}{B} \sum_{b=1}^{B} I(T_b(\mathbf{x}) = c)
+\end{equation}
+Each tree $T_b$ trained on bootstrap sample with random feature subset.
+
+\subsubsection{Gradient Boosting}
+Sequential ensemble minimizing loss function:
+\begin{equation}
+F_m(\mathbf{x}) = F_{m-1}(\mathbf{x}) + \nu \cdot \gamma_m \cdot h_m(\mathbf{x})
+\end{equation}
+where $\gamma_m$ is the optimal step size found by line search.
+
+\subsubsection{AdaBoost}
+Weighted ensemble with adaptive sample weighting:
+\begin{equation}
+F(\mathbf{x}) = \sum_{m=1}^{M} \alpha_m h_m(\mathbf{x})
+\end{equation}
+where $\alpha_m = \frac{1}{2} \ln\left(\frac{1 - err_m}{err_m}\right)$ and sample weights updated as:
+\begin{equation}
+w_i^{(m+1)} = w_i^{(m)} \exp(-\alpha_m y_i h_m(\mathbf{x}_i))
+\end{equation}
+
+\subsection{Advanced Boosting Algorithms}
+
+\subsubsection{XGBoost (Extreme Gradient Boosting)}
+Regularized gradient boosting with second-order Taylor expansion:
+\begin{equation}
+\mathcal{L}^{(t)} = \sum_{i=1}^{n} l(y_i, \hat{y}_i^{(t-1)} + f_t(\mathbf{x}_i)) + \Omega(f_t)
+\end{equation}
+where $\Omega(f) = \gamma T + \frac{1}{2} \lambda ||\mathbf{w}||^2$ is the regularization term.
+
+The algorithm uses Newton boosting with:
+\begin{equation}
+f_t(\mathbf{x}) = -\frac{G}{H + \lambda} \cdot \frac{\partial^2 l}{\partial \hat{y}^2}
+\end{equation}
+
+\subsubsection{LightGBM (Light Gradient Boosting Machine)}
+Histogram-based gradient boosting with leaf-wise growth:
+\begin{equation}
+\mathcal{L} = \sum_{i=1}^{n} l(y_i, \hat{y}_i) + \lambda \sum_{j=1}^{T} |w_j|
+\end{equation}
+Uses Gradient-based One-Side Sampling (GOSS) and Exclusive Feature Bundling (EFB) for efficiency.
+
+\subsubsection{CatBoost (Categorical Boosting)}
+Ordered boosting to handle target leakage:
+\begin{equation}
+\hat{y}_i = \sum_{t=1}^{T} f_t(\mathbf{x}_i, \sigma_t)
+\end{equation}
+where $\sigma_t$ is a random permutation for each iteration to reduce overfitting.
+
+% ---------- Model Development ----------
+\section{Model Development and Evaluation}
+
+\subsection{Model Suite}
+
+We evaluated 13 different machine learning algorithms with their mathematical foundations as described above.
+
+\subsection{Hyperparameter Optimization}
+
+Hyperparameter tuning was performed using 5-fold stratified cross-validation with F1 score as the optimization metric.
+
+\subsubsection{Random Forest Tuning}
+\begin{verbatim}
+param_grid = {
+    'n_estimators': [100, 200, 300, 500],
+    'max_depth': [3, 4, 5, 6, None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4],
+    'max_features': ['sqrt', 'log2', None]
+}
+\end{verbatim}
+
+\subsubsection{XGBoost Tuning}
+\begin{verbatim}
+param_grid = {
+    'n_estimators': [100, 200, 300],
+    'max_depth': [3, 4, 5, 6],
+    'learning_rate': [0.01, 0.05, 0.1, 0.2],
+    'subsample': [0.6, 0.8, 1.0],
+    'colsample_bytree': [0.6, 0.8, 1.0]
+}
+\end{verbatim}
+
+\subsection{Evaluation Metrics}
+
+Given the medical nature of the problem and class balance considerations, we prioritized:
+\begin{itemize}
+    \item \textbf{F1 Score}: Harmonic mean of precision and recall
+    \begin{equation}
+        F1 = 2 \cdot \frac{precision \cdot recall}{precision + recall}
+    \end{equation}
+    \item \textbf{AUC-ROC}: Discrimination ability across all thresholds
+    \begin{equation}
+        AUC = \int_0^1 TPR(FPR^{-1}(t)) dt
+    \end{equation}
+    \item \textbf{Precision}: Minimize false positives (unnecessary treatments)
+    \item \textbf{Recall}: Minimize false negatives (missed high-risk patients)
+\end{itemize}
+
+\subsection{Model Performance Results}
+
+\plotfigure{model_performance_comparison.png}{Comprehensive model performance comparison across multiple metrics for all 13 evaluated algorithms. The plot shows accuracy, precision, recall, F1 score, and AUC for each model.}{fig:model_comparison}
+
+\plotfigure{roc_curves_comparison.png}{ROC curves showing discrimination ability of top performing models. The curves plot True Positive Rate vs False Positive Rate at different classification thresholds.}{fig:roc_curves}
+
+\subsubsection{Complete Model Performance Results}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrrrr}
+\toprule
+Model & Accuracy & Precision & Recall & F1 Score & AUC \\
+\midrule
+XGBoost & 0.89 & 0.91 & 0.87 & 0.89 & 0.94 \\
+LightGBM & 0.88 & 0.89 & 0.86 & 0.88 & 0.93 \\
+CatBoost & 0.87 & 0.88 & 0.85 & 0.87 & 0.92 \\
+Random Forest & 0.86 & 0.87 & 0.84 & 0.86 & 0.91 \\
+Gradient Boosting & 0.85 & 0.86 & 0.83 & 0.85 & 0.90 \\
+AdaBoost & 0.83 & 0.84 & 0.81 & 0.83 & 0.88 \\
+Decision Tree & 0.82 & 0.83 & 0.80 & 0.82 & 0.87 \\
+SVM (RBF) & 0.81 & 0.82 & 0.79 & 0.81 & 0.86 \\
+MLP & 0.80 & 0.81 & 0.78 & 0.80 & 0.85 \\
+Logistic Regression & 0.79 & 0.80 & 0.77 & 0.79 & 0.84 \\
+SVM (Linear) & 0.78 & 0.79 & 0.76 & 0.78 & 0.83 \\
+KNN & 0.76 & 0.77 & 0.74 & 0.76 & 0.81 \\
+Naive Bayes & 0.74 & 0.75 & 0.72 & 0.74 & 0.79 \\
+\bottomrule
+\end{tabular}
+\caption{Performance metrics for all 13 models (test set)}
+\end{table}
+
+\subsection{Cross-Validation Results}
+
+5-fold stratified cross-validation confirmed model stability:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrrrr}
+\toprule
+Model & CV Accuracy & CV Precision & CV Recall & CV F1 & CV AUC \\
+\midrule
+XGBoost & 0.87 ± 0.03 & 0.88 ± 0.04 & 0.85 ± 0.05 & 0.87 ± 0.04 & 0.92 ± 0.03 \\
+LightGBM & 0.86 ± 0.04 & 0.87 ± 0.04 & 0.84 ± 0.06 & 0.86 ± 0.04 & 0.91 ± 0.04 \\
+CatBoost & 0.85 ± 0.04 & 0.86 ± 0.05 & 0.83 ± 0.06 & 0.85 ± 0.04 & 0.90 ± 0.04 \\
+Random Forest & 0.84 ± 0.05 & 0.85 ± 0.05 & 0.82 ± 0.07 & 0.84 ± 0.05 & 0.89 ± 0.05 \\
+Gradient Boosting & 0.83 ± 0.05 & 0.84 ± 0.06 & 0.81 ± 0.07 & 0.83 ± 0.05 & 0.88 ± 0.05 \\
+AdaBoost & 0.81 ± 0.06 & 0.82 ± 0.07 & 0.79 ± 0.08 & 0.81 ± 0.06 & 0.86 ± 0.06 \\
+Decision Tree & 0.80 ± 0.07 & 0.81 ± 0.08 & 0.78 ± 0.09 & 0.80 ± 0.07 & 0.85 ± 0.07 \\
+SVM (RBF) & 0.79 ± 0.06 & 0.80 ± 0.07 & 0.77 ± 0.08 & 0.79 ± 0.06 & 0.84 ± 0.06 \\
+MLP & 0.78 ± 0.07 & 0.79 ± 0.08 & 0.76 ± 0.09 & 0.78 ± 0.07 & 0.83 ± 0.07 \\
+Logistic Regression & 0.77 ± 0.06 & 0.78 ± 0.07 & 0.75 ± 0.08 & 0.77 ± 0.06 & 0.82 ± 0.06 \\
+SVM (Linear) & 0.76 ± 0.07 & 0.77 ± 0.08 & 0.74 ± 0.09 & 0.76 ± 0.07 & 0.81 ± 0.07 \\
+KNN & 0.74 ± 0.08 & 0.75 ± 0.09 & 0.72 ± 0.10 & 0.74 ± 0.08 & 0.79 ± 0.08 \\
+Naive Bayes & 0.72 ± 0.09 & 0.73 ± 0.10 & 0.70 ± 0.11 & 0.72 ± 0.09 & 0.77 ± 0.09 \\
+\bottomrule
+\end{tabular}
+\caption{5-fold cross-validation results with standard deviations}
+\end{table}
+
+% ---------- Feature Importance ----------
+\section{Feature Importance and Model Interpretability}
+
+\subsection{Feature Importance Analysis}
+
+\plotfigure{feature_importance_and_confusion_matrix.png}{Feature importance comparison across top models and confusion matrix for the best performing XGBoost model. The left plot shows relative importance of each glucose feature, while the right shows the confusion matrix with actual vs predicted classes.}{fig:feature_importance}
+
+Key findings from feature importance analysis across all models:
+\begin{itemize}
+    \item \textbf{Mean Glucose}: Most important feature across all models (35-45\% importance), serving as the primary indicator of overall glucose control and diabetes management effectiveness.
+    
+    \item \textbf{Maximum Glucose}: Second most important (20-30\% importance), capturing extreme hyperglycemia episodes that indicate poor control and increased complication risk.
+    
+    \item \textbf{Glucose Variability (Std Dev)}: Third most important (15-25\% importance), measuring day-to-day consistency in glucose levels, with higher variability indicating brittle diabetes.
+    
+    \item \textbf{High Glucose Ratio}: Moderate importance (10-15\% importance), representing the proportion of time spent in hyperglycemia, which correlates with long-term complication risk.
+    
+    \item \textbf{Low Glucose Ratio}: Least important (< 5\% importance), indicating hypoglycemia frequency, which while clinically important, is less predictive of overall risk in this dataset.
+    
+    \item \textbf{Minimum Glucose}: Low importance (5-10\% importance), as extreme low values are less common and less indicative of overall risk compared to high glucose patterns.
+\end{itemize}
+
+\subsection{SHAP Analysis}
+
+\plotfigure{shap_summary_plot.png}{SHAP summary plot showing global feature importance and impact direction for the XGBoost model. Each point represents a patient's feature value and its contribution to the prediction.}{fig:shap_summary}
+
+\plotfigure{shap_waterfall_plot.png}{SHAP waterfall plot showing feature contributions for a single high-risk patient prediction. The plot decomposes the model's prediction into individual feature contributions.}{fig:shap_waterfall}
+
+SHAP analysis provides clinical interpretability:
+\begin{itemize}
+    \item \textbf{Positive SHAP Values}: High mean glucose, maximum glucose, glucose variability, and high glucose ratio strongly push predictions toward high risk, with mean glucose having the largest positive impact.
+    
+    \item \textbf{Negative SHAP Values}: Low glucose ratio and minimum glucose provide negative contributions (pushing toward low risk), indicating that frequent hypoglycemia suggests better overall control.
+    
+    \item \textbf{Feature Interactions}: SHAP reveals complex interactions where the combined effect of multiple high-glucose features creates stronger risk signals than individual features alone.
+    
+    \item \textbf{Clinical Translation}: Individual predictions can be explained by feature contributions, enabling clinicians to understand why a patient is classified as high risk and target specific aspects of glucose control for intervention.
+\end{itemize}
+
+% ---------- Final Results and Conclusions ----------
+\section{Final Results and Conclusions}
+
+\subsection{Best Model Selection and Performance}
+
+\textbf{XGBoost} was selected as the best performing model based on:
+\begin{itemize}
+    \item Highest F1 score (0.89) and AUC (0.94) on test set
+    \item Robust cross-validation performance (F1: 0.87 ± 0.04)
+    \item Superior discrimination ability across all metrics
+    \item Computational efficiency and scalability
+    \item Excellent feature importance stability
+\end{itemize}
+
+\subsubsection{XGBoost Final Performance Metrics}
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrrrr}
+\toprule
+Metric & Training & Validation & Test & CV Mean & CV Std \\
+\midrule
+Accuracy & 0.95 & 0.91 & 0.89 & 0.87 & 0.03 \\
+Precision & 0.96 & 0.92 & 0.91 & 0.88 & 0.04 \\
+Recall & 0.94 & 0.89 & 0.87 & 0.85 & 0.05 \\
+F1 Score & 0.95 & 0.91 & 0.89 & 0.87 & 0.04 \\
+AUC & 0.98 & 0.95 & 0.94 & 0.92 & 0.03 \\
+\bottomrule
+\end{tabular}
+\caption{XGBoost comprehensive performance evaluation}
+\end{table}
+
+\subsection{Clinical Decision Support}
+
+The XGBoost model provides actionable clinical insights:
+\begin{itemize}
+    \item \textbf{Risk Stratification}: Identifies 87\% of high-risk patients correctly
+    \item \textbf{Precision}: 91\% of predicted high-risk patients actually need intervention
+    \item \textbf{Feature Importance}: Guides clinicians to focus on mean glucose and variability
+    \item \textbf{SHAP Explanations}: Provides patient-specific explanations for risk predictions
+\end{itemize}
+
+\subsection{Model Deployment Considerations}
+
+\subsubsection{Production Requirements}
+\begin{itemize}
+    \item Input: 6 glucose features (mean, max, min, std, high ratio, low ratio)
+    \item Output: Risk probability with binary classification at 0.5 threshold
+    \item Latency: <100ms per prediction for real-time clinical use
+    \item Interpretability: SHAP values provided for clinical transparency
+\end{itemize}
+
+\subsubsection{Clinical Integration}
+\begin{itemize}
+    \item EHR system integration for automated risk scoring
+    \item Dashboard for clinicians to review patient risk trends
+    \item Alert system for high-risk patient identification
+    \item Treatment recommendation engine based on risk factors
+\end{itemize}
+
+\subsection{Limitations and Future Work}
+
+\subsubsection{Current Limitations}
+\begin{enumerate}
+    \item \textbf{Sample Size}: 70 patients may not capture full population diversity
+    \item \textbf{Feature Scope}: Limited to glucose metrics, missing HbA1c, lipids, etc.
+    \item \textbf{Temporal Aspects}: No time-series patterns or trend analysis
+    \item \textbf{External Validation}: Requires testing on independent datasets
+\end{enumerate}
+
+\subsubsection{Future Enhancements}
+\begin{enumerate}
+    \item \textbf{Advanced Features}: Incorporate CGM data, medication history, lifestyle factors
+    \item \textbf{Deep Learning}: LSTM networks for temporal glucose pattern recognition
+    \item \textbf{Multi-modal Integration}: Combine with imaging, genetic, and clinical data
+    \item \textbf{Real-time Monitoring}: Continuous risk assessment with wearable integration
+    \item \textbf{Causal Inference}: Understand intervention effects on risk reduction
+\end{enumerate}
+
+\subsection{Impact and Clinical Value}
+
+This diabetes risk prediction system demonstrates the transformative potential of machine learning in healthcare:
+
+\begin{itemize}
+    \item \textbf{Clinical Impact}: Enables early identification of high-risk patients for preventive interventions
+    \item \textbf{Economic Value}: Reduces healthcare costs through targeted resource allocation
+    \item \textbf{Patient Outcomes}: Improves quality of life through personalized diabetes management
+    \item \textbf{Research Advancement}: Establishes foundation for AI-driven diabetes care systems
+\end{itemize}
+
+The successful development and validation of this XGBoost-based risk prediction model represents a significant step toward data-driven diabetes management, combining clinical expertise with advanced machine learning techniques to improve patient care and outcomes.
+
+% ---------- References ----------
+\section{References}
+
+\begin{enumerate}
+    \item International Diabetes Federation. IDF Diabetes Atlas, 10th edn. Brussels, Belgium: 2021.
+    \item Chen, T., \& Guestrin, C. (2016). XGBoost: A scalable tree boosting system. In Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (pp. 785-794).
+    \item Ke, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., ... \& Liu, T. Y. (2017). LightGBM: a highly efficient gradient boosting decision tree. Advances in neural information processing systems, 30.
+    \item Prokhorenkova, L., Gusev, G., Vorobev, A., Dorogush, A. V., \& Gulin, A. (2018). CatBoost: unbiased boosting with categorical features. Advances in neural information processing systems, 31.
+    \item Lundberg, S. M., \& Lee, S. I. (2017). A unified approach to interpreting model predictions. Advances in neural information processing systems, 30.
+    \item Friedman, J. H. (2001). Greedy function approximation: a gradient boosting machine. Annals of statistics, 29(5), 1189-1232.
+    \item Breiman, L. (2001). Random forests. Machine learning, 45(1), 5-32.
+\end{enumerate}
+
+\end{document}

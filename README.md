@@ -6,3 +6,4 @@ This repository serves as a playground for various machine learning projects, sh
 |----------------|----------------|------------------------------|--------|
 | 1 | [Bank Marketing Dataset Classification](https://www.kaggle.com/code/omchoksi04/bank-marketing-dataset) | Classification | [BANK_MARKETING/](BANK_MARKETING/) |
 | 2 | [Estimating Obesity Classification](https://www.kaggle.com/code/omchoksi04/estimating-obesity-classification) | Classification | [ESTIMATING_OBESITY_LEVELS/](ESTIMATING_OBESITY_LEVELS/) | 
+| 3 | [Diabetes Risk Prediction](https://www.kaggle.com/code/omchoksi04/diabetes-risk-prediction) | Classification | [DIABETES_RISK_PREDICTION/](DIABETES_RISK_PREDICTION/) | 
