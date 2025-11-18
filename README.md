@@ -9,3 +9,4 @@ This repository serves as a playground for various machine learning projects, sh
 | 3 | [Diabetes Risk Prediction](https://www.kaggle.com/code/omchoksi04/diabetes-risk-prediction) | Classification | [DIABETES_RISK_PREDICTION/](DIABETES_RISK_PREDICTION/) | 
 | 4 | [Newsgroup Classification](https://www.kaggle.com/code/omchoksi04/newsgroup-classification) | Classification | [20_NEWSGROUP_DATASET/](20_NEWSGROUP_DATASET/) | 
 | 5 | [Hotel Rating Prediction](https://www.kaggle.com/code/omchoksi04/hotel-rating-prediction) | Classification | [HOTEL_RATING_PREDICTION/](HOTEL_RATING_PREDICTION/) | 
+| 6 | [Employee Performance Prediction](https://www.kaggle.com/code/omchoksi04/employee-performance) | Classification | [EMPLOYEE_PERFORMANCE_PREDICTION/](HOTEL_RATING_PREDICTION/) | 
