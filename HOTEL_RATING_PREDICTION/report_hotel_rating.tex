@@ -1,0 +1,494 @@
+\documentclass[12pt,a4paper]{article}
+
+% ---------- Packages ----------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\geometry{margin=0.9in}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{pgffor}
+\usepackage{siunitx}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\graphicspath{{fig/}}
+
+% ---------- Code formatting ----------
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny,
+    frame=single,
+    breaklines=true,
+    captionpos=b
+}
+
+% ---------- Custom commands ----------
+\newcommand{\plotfigure}[3]{
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{#1}
+    \caption{#2}
+    \label{#3}
+  \end{figure}
+}
+
+% ---------- Title Page ----------
+\title{Hotel Rating Prediction: Sentiment Analysis on TripAdvisor Reviews \\
+A Deep Learning Approach to Review Classification}
+\author{Om Choksi}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% ---------- Abstract ----------
+\begin{abstract}
+This report presents a comprehensive analysis of sentiment-based hotel rating prediction using deep learning techniques on the TripAdvisor Hotel Reviews dataset. The study implements a Bidirectional Gated Recurrent Unit (GRU) model to classify reviews as either 5-star or non-5-star, achieving robust performance metrics. The analysis encompasses mathematical foundations of recurrent neural networks, detailed implementation with TensorFlow/Keras, and thorough evaluation including confusion matrices, ROC curves, and training dynamics. The project demonstrates the effectiveness of deep learning in extracting sentiment signals from raw text data for practical applications in hospitality industry analytics.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% ---------- Introduction ----------
+\section{Introduction}
+
+Hotel reviews play a crucial role in the hospitality industry, providing valuable insights into customer satisfaction and service quality. With the proliferation of online review platforms like TripAdvisor, automated sentiment analysis has become essential for hotels to monitor their reputation and identify areas for improvement.
+
+This investigation focuses on predicting whether a TripAdvisor hotel review corresponds to a perfect 5-star rating using only the review text. The task is formulated as a binary classification problem, distinguishing exceptional experiences from average or below-average ones.
+
+\subsection{Problem Formulation}
+Given a collection of hotel reviews $\mathcal{R} = \{r_1, r_2, \dots, r_n\}$, where each review $r_i$ is associated with a rating $y_i \in \{1, 2, 3, 4, 5\}$, we seek to learn a binary classifier $f: \mathcal{R} \rightarrow \{0, 1\}$ that predicts whether $y_i = 5$ (class 1) or $y_i < 5$ (class 0).
+
+\subsection{Dataset Characteristics}
+The TripAdvisor Hotel Reviews dataset exhibits the following properties:
+\begin{itemize}
+    \item \textbf{Volume}: 20,491 reviews from various hotels
+    \item \textbf{Structure}: Raw text reviews with corresponding star ratings
+    \item \textbf{Imbalance}: Original 5-class distribution with varying frequencies
+    \item \textbf{Task}: Binary classification (5-star vs. non-5-star)
+\end{itemize}
+
+\subsection{Analytical Framework}
+Our methodological approach encompasses:
+\begin{enumerate}
+    \item \textbf{Mathematical Foundations}: Recurrent neural network theory and GRU mechanics
+    \item \textbf{Text Preprocessing}: Tokenization, stopword removal, and sequence padding
+    \item \textbf{Model Architecture}: Bidirectional GRU with embedding layers
+    \item \textbf{Evaluation}: Comprehensive metrics including accuracy, AUC, and confusion analysis
+    \item \textbf{Interpretability}: Training dynamics and performance visualization
+\end{enumerate}
+
+% ---------- Mathematical Foundations ----------
+\section{Mathematical Foundations}
+
+\subsection{Text Representation and Preprocessing}
+
+\subsubsection{Tokenization and Vocabulary}
+Raw text is converted into sequences of integer tokens using a vocabulary of the most frequent words. For a review $r$ consisting of words $w_1, w_2, \dots, w_m$, the tokenization process yields:
+
+\begin{equation}
+\mathbf{s} = [t_1, t_2, \dots, t_m], \quad t_i \in \{1, 2, \dots, V\}
+\end{equation}
+
+where $V$ is the vocabulary size (10,000 in our implementation).
+
+\subsubsection{Sequence Padding}
+Variable-length sequences are padded to a maximum length $L$:
+
+\begin{equation}
+\mathbf{s}_{padded} = \begin{cases}
+\mathbf{s} & \text{if } |\mathbf{s}| = L \\
+\mathbf{s} + \mathbf{0}^{L - |\mathbf{s}|} & \text{if } |\mathbf{s}| < L
+\end{cases}
+\end{equation}
+
+\subsection{Recurrent Neural Networks}
+
+\subsubsection{Gated Recurrent Units (GRU)}
+The GRU architecture captures sequential dependencies through gating mechanisms. The update equations for a single GRU unit are:
+
+\begin{align}
+\mathbf{z}_t &= \sigma(\mathbf{W}_z \mathbf{x}_t + \mathbf{U}_z \mathbf{h}_{t-1} + \mathbf{b}_z) \\
+\mathbf{r}_t &= \sigma(\mathbf{W}_r \mathbf{x}_t + \mathbf{U}_r \mathbf{h}_{t-1} + \mathbf{b}_r) \\
+\tilde{\mathbf{h}}_t &= \tanh(\mathbf{W}_h \mathbf{x}_t + \mathbf{U}_h (\mathbf{r}_t \odot \mathbf{h}_{t-1}) + \mathbf{b}_h) \\
+\mathbf{h}_t &= (1 - \mathbf{z}_t) \odot \mathbf{h}_{t-1} + \mathbf{z}_t \odot \tilde{\mathbf{h}}_t
+\end{align}
+
+where $\mathbf{z}_t$ is the update gate, $\mathbf{r}_t$ is the reset gate, and $\odot$ denotes element-wise multiplication.
+
+\subsubsection{Bidirectional Processing}
+Bidirectional GRUs process sequences in both forward and backward directions:
+
+\begin{align}
+\vec{\mathbf{h}}_t &= \text{GRU}_\rightarrow(\mathbf{x}_t, \vec{\mathbf{h}}_{t-1}) \\
+\overleftarrow{\mathbf{h}}_t &= \text{GRU}_\leftarrow(\mathbf{x}_t, \overleftarrow{\mathbf{h}}_{t+1}) \\
+\mathbf{h}_t &= [\vec{\mathbf{h}}_t; \overleftarrow{\mathbf{h}}_t]
+\end{align}
+
+\subsection{Model Architecture}
+
+\subsubsection{Embedding Layer}
+Word embeddings transform discrete tokens into continuous vectors:
+
+\begin{equation}
+\mathbf{e}_i = \mathbf{W}_{emb} \mathbf{x}_i, \quad \mathbf{e}_i \in \mathbb{R}^{d_{emb}}
+\end{equation}
+
+\subsubsection{Complete Architecture}
+The full model processes input sequences through:
+
+\begin{enumerate}
+    \item \textbf{Embedding}: $\mathbf{X} \in \mathbb{R}^{L \times d_{emb}}$
+    \item \textbf{Bidirectional GRU}: $\mathbf{H} \in \mathbb{R}^{L \times 2h}$ where $h=128$
+    \item \textbf{Flattening}: $\mathbf{h}_{flat} \in \mathbb{R}^{2hL}$
+    \item \textbf{Dense Output}: $\hat{y} = \sigma(\mathbf{W}_{out} \mathbf{h}_{flat} + \mathbf{b}_{out})$
+\end{enumerate}
+
+\subsubsection{Training Objective}
+The model is trained by minimizing binary cross-entropy:
+
+\begin{equation}
+\mathcal{L} = -\frac{1}{N} \sum_{i=1}^N [y_i \log \hat{y}_i + (1-y_i) \log (1-\hat{y}_i)]
+\end{equation}
+
+with Adam optimization for parameter updates.
+
+% ---------- Implementation and Data Processing ----------
+\section{Implementation and Data Processing}
+
+\subsection{Data Acquisition and Preprocessing}
+
+\subsubsection{Dataset Loading}
+The implementation begins with data acquisition from the TripAdvisor Hotel Reviews dataset:
+
+\begin{lstlisting}[caption=Data Loading Implementation]
+import pandas as pd
+
+# Load the dataset
+df = pd.read_csv("tripadvisor_hotel_reviews.csv")
+print(f"Dataset shape: {df.shape}")
+\end{lstlisting}
+
+\subsubsection{Text Preprocessing Pipeline}
+The preprocessing combines stopword removal and basic cleaning:
+
+\begin{lstlisting}[caption=Text Preprocessing Pipeline]
+import re
+from nltk.corpus import stopwords
+
+stop_words = stopwords.words('english')
+
+def process_text(text):
+    # Remove digits
+    text = re.sub(r'\d+', ' ', text)
+    # Split into words
+    text = text.split()
+    # Remove stopwords
+    text = " ".join([word for word in text if word.lower().strip() not in stop_words])
+    return text
+
+# Apply preprocessing
+reviews = df['Review'].apply(process_text)
+\end{lstlisting}
+
+\subsubsection{Tokenization and Sequencing}
+\begin{lstlisting}[caption=Tokenization and Sequencing]
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+# Vocabulary size
+num_words = 10000
+
+# Initialize and fit tokenizer
+tokenizer = Tokenizer(num_words=num_words)
+tokenizer.fit_on_texts(reviews)
+
+# Convert to sequences
+sequences = tokenizer.texts_to_sequences(reviews)
+
+# Determine max length
+max_seq_length = max(len(seq) for seq in sequences)
+print(f"Max sequence length: {max_seq_length}")
+
+# Pad sequences
+inputs = pad_sequences(sequences, maxlen=max_seq_length, padding='post')
+\end{lstlisting}
+
+\subsection{Label Encoding and Data Splitting}
+
+\subsubsection{Binary Label Creation}
+\begin{lstlisting}[caption=Binary Label Encoding]
+import numpy as np
+
+# Convert to binary: 5-star (1) vs others (0)
+labels = np.array(df['Rating'].apply(lambda x: 1 if x == 5 else 0))
+print(f"Class distribution: {np.bincount(labels)}")
+\end{lstlisting}
+
+\subsubsection{Train-Test Split}
+\begin{lstlisting}[caption=Data Splitting]
+from sklearn.model_selection import train_test_split
+
+train_inputs, test_inputs, train_labels, test_labels = train_test_split(
+    inputs, labels, train_size=0.7, random_state=100
+)
+
+print(f"Train shape: {train_inputs.shape}")
+print(f"Test shape: {test_inputs.shape}")
+\end{lstlisting}
+
+\subsection{Model Implementation}
+
+\subsubsection{Architecture Definition}
+\begin{lstlisting}[caption=Bidirectional GRU Model Architecture]
+import tensorflow as tf
+
+embedding_dim = 128
+
+# Input layer
+inputs = tf.keras.Input(shape=(max_seq_length,))
+
+# Embedding layer
+embedding = tf.keras.layers.Embedding(
+    input_dim=num_words,
+    output_dim=embedding_dim,
+    input_length=max_seq_length
+)(inputs)
+
+# Bidirectional GRU
+gru = tf.keras.layers.Bidirectional(
+    tf.keras.layers.GRU(128, return_sequences=True)
+)(embedding)
+
+# Flatten
+flatten = tf.keras.layers.Flatten()(gru)
+
+# Output layer
+outputs = tf.keras.layers.Dense(1, activation='sigmoid')(flatten)
+
+# Create model
+model = tf.keras.Model(inputs, outputs)
+\end{lstlisting}
+
+\subsubsection{Model Compilation and Training}
+\begin{lstlisting}[caption=Model Training Configuration]
+# Compile model
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=[
+        'accuracy',
+        tf.keras.metrics.AUC(name='auc')
+    ]
+)
+
+# Training with early stopping
+history = model.fit(
+    train_inputs,
+    train_labels,
+    validation_split=0.2,
+    batch_size=32,
+    epochs=20,
+    callbacks=[
+        tf.keras.callbacks.EarlyStopping(
+            monitor='val_accuracy',
+            patience=2,
+            restore_best_weights=True
+        )
+    ]
+)
+\end{lstlisting}
+
+% ---------- Results and Analysis ----------
+\section{Results and Analysis}
+
+\subsection{Performance Metrics}
+
+\subsubsection{Quantitative Results}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcccc}
+\toprule
+Metric & Value & Interpretation \\
+\midrule
+Test Accuracy & 78.9\% & Solid real-world performance \\
+AUC-ROC & 0.88 & Excellent discriminative power \\
+5-star Recall & 72\% & Catches most truly great hotels \\
+5-star Precision & 79\% & Low false positive rate \\
+Macro F1-Score & 0.78 & Balanced performance \\
+Weighted F1-Score & 0.79 & Weighted by class support \\
+\bottomrule
+\end{tabular}
+\caption{Comprehensive performance metrics for the hotel rating prediction model}
+\label{tab:performance}
+\end{table}
+
+\subsubsection{Confusion Matrix Analysis}
+
+\plotfigure{confusion_matrix.png}{Confusion matrix showing the classification performance for binary hotel rating prediction. True labels are on the y-axis, predicted labels on the x-axis.}{fig:confusion}
+
+The confusion matrix reveals:
+\begin{itemize}
+    \item \textbf{True Negatives (2,914)}: Correctly identified non-5-star reviews
+    \item \textbf{True Positives (1,937)}: Correctly identified 5-star reviews (72\% recall)
+    \item \textbf{False Negatives (778)}: Missed 5-star reviews (classified as non-5-star)
+    \item \textbf{False Positives (519)}: Incorrectly classified non-5-star as 5-star
+\end{itemize}
+
+The model demonstrates slightly better performance in detecting negative/average reviews than identifying perfect 5-star experiences.
+
+\subsubsection{ROC Curve Analysis}
+
+\plotfigure{roc_curve.png}{ROC curve showing the trade-off between true positive rate and false positive rate at different classification thresholds.}{fig:roc}
+
+The ROC curve analysis indicates:
+\begin{itemize}
+    \item \textbf{AUC = 0.88}: Excellent discriminative ability
+    \item \textbf{Curve Shape}: Strong performance across all thresholds
+    \item \textbf{Interpretation}: Model confidently separates 5-star from lower-rated reviews
+\end{itemize}
+
+\subsubsection{Training Dynamics}
+
+\plotfigure{training_curves.png}{Training and validation accuracy/loss curves over 20 epochs, showing the learning progression and early stopping behavior.}{fig:training}
+
+The training curves demonstrate healthy learning behavior:
+\begin{itemize}
+    \item \textbf{Accuracy}: Smooth increase with good validation tracking
+    \item \textbf{Loss}: Steady decrease with minimal overfitting
+    \item \textbf{Early Stopping}: Triggered at optimal point (epoch 12)
+    \item \textbf{Final Performance}: Validation accuracy ~79\% with stable convergence
+\end{itemize}
+
+\subsubsection{Model Architecture Visualization}
+
+\plotfigure{model_architecture.png}{Neural network architecture diagram showing the flow from input sequences through embedding, bidirectional GRU, flattening, and final classification layers.}{fig:architecture}
+
+The architecture visualization confirms:
+\begin{itemize}
+    \item \textbf{Sequential Processing}: Bidirectional GRU captures context effectively
+    \item \textbf{Feature Extraction}: Learned embeddings + recurrent processing
+    \item \textbf{Classification}: Simple dense layer for binary prediction
+    \item \textbf{Efficiency}: Standard deep learning pipeline for text classification
+\end{itemize}
+
+\subsection{Detailed Analysis}
+
+\subsubsection{Algorithm Strengths and Limitations}
+
+\textbf{Bidirectional GRU:}
+\begin{itemize}
+    \item \textbf{Strengths}: Captures long-range dependencies, bidirectional context, robust to vanishing gradients
+    \item \textbf{Limitations}: Computationally intensive, requires careful hyperparameter tuning
+    \item \textbf{Best Use Case}: Sequential data with complex temporal relationships
+\end{itemize}
+
+\subsubsection{Category-Specific Performance}
+
+The binary classification approach shows:
+\begin{enumerate}
+    \item \textbf{Strong Negative Detection}: 85\% recall for non-5-star reviews
+    \item \textbf{Reasonable Positive Detection}: 72\% recall for 5-star reviews
+    \item \textbf{Balanced Precision}: ~79\% across both classes
+    \item \textbf{Overall Robustness}: Consistent performance despite class imbalance
+\end{enumerate}
+
+\subsubsection{Computational Complexity}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+Component & Complexity & Memory & Notes \\
+\midrule
+Embedding & $\mathcal{O}(V \cdot d)$ & Moderate & Learned parameters \\
+Bidirectional GRU & $\mathcal{O}(L \cdot h)$ & High & Sequential processing \\
+Flatten + Dense & $\mathcal{O}(L \cdot h)$ & Low & Final classification \\
+Training & $\mathcal{O}(N \cdot L \cdot h)$ & High & Batch processing \\
+Inference & $\mathcal{O}(L \cdot h)$ & Moderate & Real-time capable \\
+\bottomrule
+\end{tabular}
+\caption{Computational complexity analysis (V: vocab size, d: embedding dim, L: seq length, h: hidden size, N: samples)}
+\label{tab:complexity}
+\end{table}
+
+% ---------- Conclusion ----------
+\section{Conclusion}
+
+This comprehensive study successfully demonstrates the application of deep learning for sentiment-based hotel rating prediction on the TripAdvisor dataset. The Bidirectional GRU model achieves robust performance in distinguishing 5-star reviews from lower-rated ones using only raw text input.
+
+\subsection{Key Findings}
+
+\begin{enumerate}
+    \item \textbf{Model Performance}: 78.9\% accuracy with 0.88 AUC demonstrates strong discriminative power
+    \item \textbf{Architecture Effectiveness}: Bidirectional GRU effectively captures sequential sentiment patterns
+    \item \textbf{Practical Utility}: Binary classification provides actionable insights for hospitality analytics
+    \item \textbf{Training Stability}: Healthy learning curves with appropriate regularization
+\end{enumerate}
+
+\subsection{Mathematical Insights}
+
+The theoretical foundations reveal:
+\begin{itemize}
+    \item GRU gating mechanisms enable effective long-range dependency modeling
+    \item Bidirectional processing captures contextual sentiment from both directions
+    \item Embedding learning discovers semantically meaningful text representations
+\end{itemize}
+
+\subsection{Practical Implications}
+
+The analysis provides clear guidance for deployment:
+\begin{itemize}
+    \item \textbf{Accuracy Requirements}: Suitable for automated review monitoring
+    \item \textbf{Computational Constraints}: Efficient inference for real-time applications
+    \item \textbf{Interpretability}: Confusion matrix provides actionable feedback
+    \item \textbf{Scalability}: Architecture scales to larger datasets and vocabularies
+\end{itemize}
+
+\subsection{Future Research Directions}
+
+\begin{enumerate}
+    \item \textbf{Advanced Architectures}: Transformer-based models (BERT, RoBERTa) for superior performance
+    \item \textbf{Multi-class Classification}: Predict all rating levels (1-5 stars) instead of binary
+    \item \textbf{Aspect-Based Analysis}: Identify specific hotel aspects (cleanliness, service, location)
+    \item \textbf{Multilingual Extension}: Apply to reviews in multiple languages
+    \item \textbf{Real-time Deployment}: Optimize for edge devices and mobile applications
+\end{enumerate}
+
+This work establishes a solid foundation for automated sentiment analysis in the hospitality domain, demonstrating that deep learning can reliably extract valuable insights from customer review text for business intelligence and reputation management.
+
+% ---------- References ----------
+\section{References}
+
+\begin{enumerate}
+    \item Alam, M. H., Ryu, W.-J., Lee, S., 2016. Joint multi-grain topic sentiment: modeling semantic aspects for online reviews. Information Sciences 339, 206–223.
+
+    \item Hochreiter, S., Schmidhuber, J., 1997. Long short-term memory. Neural Computation 9(8), 1735–1780.
+
+    \item Cho, K., van Merrienboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., Bengio, Y., 2014. Learning phrase representations using RNN encoder-decoder for statistical machine translation. arXiv preprint arXiv:1406.1078.
+
+    \item Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., Dean, J., 2013. Distributed representations of words and phrases and their compositionality. Advances in neural information processing systems, 26.
+
+    \item Kingma, D. P., Ba, J., 2014. Adam: A method for stochastic optimization. arXiv preprint arXiv:1412.6980.
+
+    \item TripAdvisor Dataset: https://www.kaggle.com/datasets/andrewmvd/trip-advisor-hotel-reviews
+\end{enumerate}
+
+\end{document}</content>
+<parameter name="filePath">d:\WORKSPACE\MLDLC\machine-learning-playground\HOTEL_RATING_PREDICTION\report_hotel_rating.tex
