@@ -37,12 +37,12 @@
 }
 
 % ---------- Custom commands ----------
-\newcommand{\plotfigure}[3]{
+\newcommand{\plotfigure}[4]{
   \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\linewidth]{#1}
-    \caption{#2}
-    \label{#3}
+    \includegraphics[width=#1]{#2}
+    \caption{#3}
+    \label{#4}
   \end{figure}
 }
 
@@ -314,6 +314,85 @@ history = model.fit(
 )
 \end{lstlisting}
 
+\section{Model Working and Code Flow}
+
+\subsection{Workflow Overview}
+
+The complete pipeline follows these steps:
+
+1. \textbf{Data Loading}: Load CSV dataset with reviews and ratings
+2. \textbf{Preprocessing}: Clean text, remove stopwords, tokenize
+3. \textbf{Tokenization}: Convert text to integer sequences
+4. \textbf{Padding}: Make all sequences same length
+5. \textbf{Label Encoding}: Convert ratings to binary (5-star = 1, else = 0)
+6. \textbf{Train-Test Split}: 70\% train, 30\% test
+7. \textbf{Model Building}: Define Bidirectional GRU architecture
+8. \textbf{Training}: Fit model with early stopping
+9. \textbf{Evaluation}: Test performance, generate metrics and plots
+10. \textbf{Save Model}: Export trained model for deployment
+
+\subsection{Code Flow}
+
+The code execution follows this sequence:
+
+\begin{enumerate}
+    \item Import necessary libraries (TensorFlow, Keras, NLTK, etc.)
+    \item Load and inspect dataset structure
+    \item Apply text preprocessing function to all reviews
+    \item Initialize Tokenizer with 10K vocabulary limit
+    \item Fit tokenizer on processed reviews
+    \item Convert reviews to sequences of integers
+    \item Calculate maximum sequence length for padding
+    \item Pad all sequences to max length with post-padding
+    \item Create binary labels from rating column
+    \item Split data into train/test sets (70/30)
+    \item Define model input layer with max sequence shape
+    \item Add embedding layer (10K vocab, 128 dim)
+    \item Add Bidirectional GRU layer (128 units, return sequences)
+    \item Flatten the GRU output
+    \item Add dense output layer with sigmoid activation
+    \item Compile model with Adam, binary crossentropy, accuracy + AUC metrics
+    \item Train with validation split, batch size 32, early stopping
+    \item Evaluate on test set
+    \item Generate confusion matrix, ROC curve, training plots
+    \item Save model to H5 file
+\end{enumerate}
+
+\subsection{Data Flow Through the Model}
+
+For a single review:
+
+1. \textbf{Input Text}: "Great hotel, excellent service, will return!"
+2. \textbf{Preprocessing}: Remove stopwords → "Great hotel, excellent service, return!"
+3. \textbf{Tokenization}: [great, hotel, excellent, service, return] → [142, 85, 234, 67, 891]
+4. \textbf{Padding}: Pad to max length → [142, 85, 234, 67, 891, 0, 0, ..., 0]
+5. \textbf{Embedding}: Convert to 128-dim vectors
+6. \textbf{Bidirectional GRU}: Process sequence forward and backward
+7. \textbf{Flatten}: Convert to 1D vector
+8. \textbf{Dense + Sigmoid}: Output probability (e.g., 0.85 for 5-star)
+
+\subsection{Training Flow}
+
+- \textbf{Epoch Loop}: For each epoch (up to 20)
+  - \textbf{Batch Processing}: Process 32 samples at a time
+  - \textbf{Forward Pass}: Compute predictions
+  - \textbf{Loss Calculation}: Binary crossentropy
+  - \textbf{Backward Pass}: Update weights with Adam
+  - \textbf{Validation}: Check performance on validation set
+  - \textbf{Early Stopping}: Stop if no improvement for 2 epochs
+
+\subsection{Outcome Summary}
+
+The workflow produces:
+- Trained model achieving 78.9\% test accuracy
+- AUC of 0.88 indicating excellent discrimination
+- Confusion matrix showing balanced performance
+- ROC curve demonstrating threshold robustness
+- Training curves confirming stable learning
+- Saved model ready for inference on new reviews
+
+This systematic approach ensures reproducible results and clear understanding of each processing step.
+
 % ---------- Results and Analysis ----------
 \section{Results and Analysis}
 
@@ -341,7 +420,7 @@ Weighted F1-Score & 0.79 & Weighted by class support \\
 
 \subsubsection{Confusion Matrix Analysis}
 
-\plotfigure{confusion_matrix.png}{Confusion matrix showing the classification performance for binary hotel rating prediction. True labels are on the y-axis, predicted labels on the x-axis.}{fig:confusion}
+\plotfigure{0.6\linewidth}{confusion_matrix.png}{Confusion matrix showing the classification performance for binary hotel rating prediction. True labels are on the y-axis, predicted labels on the x-axis.}{fig:confusion}
 
 The confusion matrix reveals:
 \begin{itemize}
@@ -355,7 +434,7 @@ The model demonstrates slightly better performance in detecting negative/average
 
 \subsubsection{ROC Curve Analysis}
 
-\plotfigure{roc_curve.png}{ROC curve showing the trade-off between true positive rate and false positive rate at different classification thresholds.}{fig:roc}
+\plotfigure{0.7\linewidth}{roc_auc_curve.png}{ROC curve showing the trade-off between true positive rate and false positive rate at different classification thresholds.}{fig:roc}
 
 The ROC curve analysis indicates:
 \begin{itemize}
@@ -366,7 +445,7 @@ The ROC curve analysis indicates:
 
 \subsubsection{Training Dynamics}
 
-\plotfigure{training_curves.png}{Training and validation accuracy/loss curves over 20 epochs, showing the learning progression and early stopping behavior.}{fig:training}
+\plotfigure{0.9\linewidth}{accuracy_over_empchs_loss_over_epochs.png}{Training and validation accuracy/loss curves over 20 epochs, showing the learning progression and early stopping behavior.}{fig:training}
 
 The training curves demonstrate healthy learning behavior:
 \begin{itemize}
@@ -378,7 +457,7 @@ The training curves demonstrate healthy learning behavior:
 
 \subsubsection{Model Architecture Visualization}
 
-\plotfigure{model_architecture.png}{Neural network architecture diagram showing the flow from input sequences through embedding, bidirectional GRU, flattening, and final classification layers.}{fig:architecture}
+\plotfigure{0.8\linewidth}{model.png}{Neural network architecture diagram showing the flow from input sequences through embedding, bidirectional GRU, flattening, and final classification layers.}{fig:architecture}
 
 The architecture visualization confirms:
 \begin{itemize}
