@@ -11,3 +11,4 @@ This repository serves as a playground for various machine learning projects, sh
 | 5 | [Hotel Rating Prediction](https://www.kaggle.com/code/omchoksi04/hotel-rating-prediction) | Classification | [HOTEL_RATING_PREDICTION/](HOTEL_RATING_PREDICTION/) | 
 | 6 | [Employee Performance Prediction](https://www.kaggle.com/code/omchoksi04/employee-performance) | Classification | [EMPLOYEE_PERFORMANCE_PREDICTION/](HOTEL_RATING_PREDICTION/) | 
 | 7 | [Bihar Election 2025](https://www.kaggle.com/code/omchoksi04/bihar-election-2025) | EDA & ANALYSIS | [BIHAR_ELECTION_2025/](BIHAR_ELECTION_2025/) | 
+| 8 | [Spotify Data Analysis](https://www.kaggle.com/code/omchoksi04/spotify-data-analysis) | EDA & ANALYSIS | [SPOTIFY_DATA_ANALYSIS/](SPOTIFY_DATA_ANALYSIS/) | 
