@@ -7,4 +7,5 @@ This project predicts whether hotel reviews are 5-star or not using text classif
 
 The model achieved an accuracy of 0.789. CNN model was used for text classification.
 
-!accuracy_over_empchs_loss_over_epochs.png !confusion_matrix.png !model.png !roc_auc_curve.png
+<img src="fig/accuracy_over_empchs_loss_over_epochs.png" alt="Image" width="300"> <img src="fig/confusion_matrix.png" alt="Image" width="300"> <img src="fig/model.png" alt="Image" width="300"> <img src="fig/roc_auc_curve.png" alt="Image" width="300">
+
