@@ -14,3 +14,4 @@ This repository serves as a playground for various machine learning projects, sh
 | 8 | [Spotify Data Analysis](https://www.kaggle.com/code/omchoksi04/spotify-data-analysis) | EDA & ANALYSIS | [SPOTIFY_DATA_ANALYSIS/](SPOTIFY_DATA_ANALYSIS/) | 
 | 9 | [Ransomware Attack Detection](https://www.kaggle.com/code/omchoksi04/ransomware-attack-detection) | Classification | [RANSOMWARE_ATTACK_DETECTION/](RANSOMWARE_ATTACK_DETECTION/) | 
 | 10 | [ANTI ANXIETY MEMORY STUDY](https://www.kaggle.com/code/omchoksi04/anti-anxiety-medication-memory-study) | Classification | [ANTI_ANXIETY_MEMORY_STUDY/](ANTI_ANXIETY_MEMORY_STUDY/) | 
+| 11 | [CAR PRICE PREDICTION](https://www.kaggle.com/code/omchoksi04/car-price-prediction) | REGRESSION | [CAR_PRICE_PREDICTION/](CAR_PRICE_PREDICTION/) | 
