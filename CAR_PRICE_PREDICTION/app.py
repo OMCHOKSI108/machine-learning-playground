@@ -5,10 +5,14 @@ import joblib
 
 st.set_page_config(layout="wide")
 
-# Load the model and preprocessors
-model = joblib.load('best_model_from_all.pkl')
-scaler = joblib.load('scaler.pkl')
-encoder = joblib.load('encoder.pkl')
+# # Load the model and preprocessors
+# model = joblib.load('best_model_from_all.pkl')
+# scaler = joblib.load('scaler.pkl')
+# encoder = joblib.load('encoder.pkl')
+
+model = joblib.load('/mount/src/machine-learning-playground/CAR_PRICE_PREDICTION/models/best_model_from_all.pkl')
+scaler = joblib.load('/mount/src/machine-learning-playground/CAR_PRICE_PREDICTION/models/scaler.pkl')
+encoder = joblib.load('/mount/src/machine-learning-playground/CAR_PRICE_PREDICTION/models/encoder.pkl')  
 
 # Define features
 num_features = ['enginesize', 'horsepower', 'curbweight', 'carwidth', 'wheelbase', 'citympg', 'doornumber', 'cylindernumber']
