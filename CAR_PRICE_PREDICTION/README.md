@@ -3,7 +3,7 @@
 
 ## Car Price Prediction Project
 
-## Demo
+## Demo Link : https://car-price-prediction-app-choksi.streamlit.app/
 
 ![Car Price Prediction Demo](assets/image.png)
 
