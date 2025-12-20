@@ -3,6 +3,10 @@
 
 ## Car Price Prediction Project
 
+## Demo
+
+![Car Price Prediction Demo](assets/image.png)
+
 ---
 
 ## 1. Dataset-Level Insights
