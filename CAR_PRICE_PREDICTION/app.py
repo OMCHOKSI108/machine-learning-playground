@@ -6,9 +6,9 @@ import joblib
 st.set_page_config(layout="wide")
 
 # Load the model and preprocessors
-model = joblib.load('models/best_model_from_all.pkl')
-scaler = joblib.load('models/scaler.pkl')
-encoder = joblib.load('models/encoder.pkl')
+model = joblib.load('best_model_from_all.pkl')
+scaler = joblib.load('scaler.pkl')
+encoder = joblib.load('encoder.pkl')
 
 # Define features
 num_features = ['enginesize', 'horsepower', 'curbweight', 'carwidth', 'wheelbase', 'citympg', 'doornumber', 'cylindernumber']
