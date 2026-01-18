@@ -1,0 +1,9 @@
+pandas
+numpy
+scikit-learn==1.7.2
+streamlit
+joblib
+lightgbm
+catboost
+# If you need to load the original pickles made with scikit-learn 1.6.1, use:
+# scikit-learn==1.6.1
