@@ -15,3 +15,6 @@ This repository serves as a playground for various machine learning projects, sh
 | 9 | [Ransomware Attack Detection](https://www.kaggle.com/code/omchoksi04/ransomware-attack-detection) | Classification | [RANSOMWARE_ATTACK_DETECTION/](RANSOMWARE_ATTACK_DETECTION/) | 
 | 10 | [ANTI ANXIETY MEMORY STUDY](https://www.kaggle.com/code/omchoksi04/anti-anxiety-medication-memory-study) | Classification | [ANTI_ANXIETY_MEMORY_STUDY/](ANTI_ANXIETY_MEMORY_STUDY/) | 
 | 11 | [CAR PRICE PREDICTION](https://www.kaggle.com/code/omchoksi04/car-price-prediction) | REGRESSION | [CAR_PRICE_PREDICTION/](CAR_PRICE_PREDICTION/) | 
+| 12 | [Gen AI Misinformation Detection](https://www.kaggle.com/code/omchoksi04/gen-ai-misinformation-detection) | Classification | [GENAI-MISSINFORMATION_LOGISTIC_REG/](GENAI-MISSINFORMATION_LOGISTIC_REG/) | 
+| 13 | [Baseball Player Salary Prediction](https://www.kaggle.com/code/omchoksi04/baseball-player-salary-prediction) | REGRESSION | [BASEBALL_PLAYER_SALARY_PREDICTION/](BASEBALL_PLAYER_SALARY_PREDICTION/) | 
+| 14 | [Linear Regression California Housing](https://www.kaggle.com/code/omchoksi04/linear-regression-california-housing) | REGRESSION | [REGRESSION_MODELS_CODE/](REGRESSION_MODELS_CODE/) | 
