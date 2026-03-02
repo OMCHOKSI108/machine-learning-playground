@@ -1216,7 +1216,7 @@ phase (lower Voltage).
 So you can do following if you are used to such technical terms.
 1) Clean all mentioned contacts with contact spray
 2) readjust the 5 Volt level of your powersupply
-3) use a calm fan and think of preventing dust blowinÔ through the floppy!
+3) use a calm fan and think of preventing dust blowinï¿½ through the floppy!
    (a fixed piece of paper can prevent this)
 if you don't know how to do it beg a friendly technician!
 
@@ -5954,7 +5954,7 @@ just wondering...
 
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
@@ -5969,13 +5969,13 @@ each simm. In the case of the LC III, it only has one simm slot, but accesses wi
 be 32 bits wides.
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
 Newsgroup: comp.sys.mac.hardware
 document_id: 51593
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: Interesting ADB behaviour on C650
 
 In <1993Apr16.091202.15500@waikato.ac.nz> ldo@waikato.ac.nz (Lawrence D'Oliveiro, Waikato University) writes:
@@ -6004,7 +6004,7 @@ Cheers,
 
 Newsgroup: comp.sys.mac.hardware
 document_id: 51594
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: What is "ROM accelerated video"?
 
 In <1qknuq$9ut@agate.berkeley.edu> c60b-3jl@web-4f.berkeley.edu (James Wang) writes:
@@ -13987,7 +13987,7 @@ Real easy to install, but it does require some soldering.
 
 Newsgroup: comp.sys.mac.hardware
 document_id: 51865
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: Whither QuickDraw Performance (across product line)
 
 In <daves-190493121505@129.228.20.182> daves@xetron.com (Dave Steele) writes:
@@ -15115,7 +15115,7 @@ like SIMM memory check}, or a dozen or so different types of memory boards.
 
 HD Interfaces {limited to hard drives by design or lack of development}: 
 MFM:  Modified Frequency Modulation, RLL:  Run Length Limited
- only used with smaller [² 60mb] hard drives.
+ only used with smaller [ï¿½ 60mb] hard drives.
 IDE:  Integrated Device Electronics 
  Asynchronous {~5MB/s max} and synchronous {8.3MB/s max} transfer.
  currently the most common standard, and is mainly used for medium sized 
@@ -15493,10 +15493,48 @@ document_id: 51894
 From: Mikael Fredriksson <Mikael.Fredriksson@macexchange.se>
 Subject: RE-Re: Quadra SCSI Problems???
 
- In article <C5L39p.2qz@news.udel.edu>, johnston@me.udel.edu (Bill Johnston) writes:|> In article <1993Apr16.144750.1568@mintaka.lcs.mit.edu> nodine@lcs.mit.edu (Mark H. Nodine) writes:|> >I don't know about the specific problem mentioned in your|> >message, but I definitely had SCSI problems between my|> >Q700 and my venerable Jasmine Megadrive 10 cartridge|> >drives.  My solution was to get Silverlining.  None of|> >the loops that involved blind writes worked to the drives;
-op that worked was the "Macintosh|> >Software" loop (whatever that means).|> |> I doubt this is a Quadra-specific problem.  I had to get|> rid of my "venerable" Bernoulli 20 last year (with enough |> cartridges purchased at ~$90 each to make the whole thing |> worth more than my whole computer ;).  The tech support guys|> at Ocean Microsystems suggested that some third-party drivers |> might fix the problem - in my case the cartridges wouldn't |> format/mount/partition for A/UX.  
-hat the Megadrives worked perfectly on both myMac Plus and my Powerbook 140.  It was for this reason I assumedthe problem had something to do with the Quadra.  Even with theQuadra, they mostly worked OK.  The problem occurred when I ejecteda cartridge from a drive: it would start popping up dialog boxessaying "This cartridge must be formatted with Jasmine Driveware"even though there was no cartridge in the drive.	--Mark
-t to format) I have this confirmed from Apple Computer in Sweden (I work for a Apple dealer as a service tech). We had problems that Quadras wanted to format a diskette or a Syquest when ther was nothing in the drive. This problem was fixed sytem 7.1Mikael Fredriksson-------------------------------------------------email: mikael_fredriksson@macexchange.seMac Exchange BBSPL 3813S-437 92 LindomeSwedenBBS +46-31-948290 (5 lines)FAX +46-31-948294FIDO 2:203/211  
+ 
+In article <C5L39p.2qz@news.udel.edu>, johnston@me.udel.edu (Bill Johnston) writes:
+|> In article <1993Apr16.144750.1568@mintaka.lcs.mit.edu> nodine@lcs.mit.edu (Mark H. Nodine) writes:
+|> >I don't know about the specific problem mentioned in your
+|> >message, but I definitely had SCSI problems between my
+|> >Q700 and my venerable Jasmine Megadrive 10 cartridge
+|> >drives.  My solution was to get Silverlining.  None of
+|> >the loops that involved blind writes worked to the drives;
+op that worked was the "Macintosh
+|> >Software" loop (whatever that means).
+|> 
+|> I doubt this is a Quadra-specific problem.  I had to get
+|> rid of my "venerable" Bernoulli 20 last year (with enough 
+|> cartridges purchased at ~$90 each to make the whole thing 
+|> worth more than my whole computer ;).  The tech support guys
+|> at Ocean Microsystems suggested that some third-party drivers 
+|> might fix the problem - in my case the cartridges wouldn't 
+|> format/mount/partition for A/UX.  
+hat the Megadrives worked perfectly on both my
+Mac Plus and my Powerbook 140.  It was for this reason I assumed
+the problem had something to do with the Quadra.  Even with the
+Quadra, they mostly worked OK.  The problem occurred when I ejected
+a cartridge from a drive: it would start popping up dialog boxes
+saying "This cartridge must be formatted with Jasmine Driveware"
+even though there was no cartridge in the drive.
+
+	--Mark
+t to format) I have this confirmed from Apple Computer in Sweden (I work for a Apple dealer as a service tech). We had problems that Quadras wanted to format a diskette or a Syquest when ther was nothing in the drive. This problem was fixed sytem 7.1
+
+Mikael Fredriksson
+
+-------------------------------------------------
+email: mikael_fredriksson@macexchange.se
+
+Mac Exchange BBS
+PL 3813
+S-437 92 Lindome
+Sweden
+BBS +46-31-948290 (5 lines)
+FAX +46-31-948294
+FIDO 2:203/211
+  
 <Disclaimer: Mac Exchange BBS cannot be held responsible for the contents of this message>
 
 Newsgroup: comp.sys.mac.hardware
@@ -15746,7 +15784,7 @@ Subject: Re: Quadra SCSI Problems???
 To the best of my knowledge there aren't any problems with Quadras and
 blind transfers.  Trouble with blind transfers usually means the programmer
 screwed up the TIBs or didn't test their driver with the device in question.
-Well designed TIBs poll or loop at every point where delays of >16µsec occur.
+Well designed TIBs poll or loop at every point where delays of >16ï¿½sec occur.
 This usually occurs at the first byte of each block of a transfer but some
 devices can "hiccup" in the middle of blocks.  If this happens in the middle
 of a blind transfer there is the possibility of losing or gaining a byte
@@ -15991,7 +16029,7 @@ unless you can live with mono.
 
 Newsgroup: comp.sys.mac.hardware
 document_id: 51916
-From: d88-jwa@eufrat.nada.kth.se (Jon Wätte)
+From: d88-jwa@eufrat.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: x86 ~= 680x0 ?? (How do they compare?)
 
 In <rayC5rpxB.AK8@netcom.com> ray@netcom.com (Ray Fischer) writes:
@@ -16015,7 +16053,7 @@ Cheers,
 
 Newsgroup: comp.sys.mac.hardware
 document_id: 51917
-From: d88-jwa@eufrat.nada.kth.se (Jon Wätte)
+From: d88-jwa@eufrat.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: SE rom
 
 In <1993Apr20.085651.1@mrl.dsto.gov.au> ryanph@mrl.dsto.gov.au writes:
@@ -16537,7 +16575,7 @@ Jim Pyke
 
 Newsgroup: comp.sys.mac.hardware
 document_id: 51941
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: Why the drive speeds differ??
 
 In <C5r70z.4GB@zimmer.CSUFresno.EDU> mmatteo@mondrian.CSUFresno.EDU (Marc Matteo) writes:
@@ -17748,7 +17786,7 @@ the other stuff on the board.  If you can replace the battery, you
 can install the battery holder.
 -- 
 Matthew T. Russotto	russotto@eng.umd.edu	russotto@wam.umd.edu
-Some news readers expect "Disclaimer:" here.
+Some news readers expect "Disclaimer:kinde.
 Just say NO to police searches and seizures.  Make them use force.
 (not responsible for bodily harm resulting from following above advice)
 
@@ -19523,7 +19561,7 @@ be
 June 30th.  Can anyone second this rumour?
 -- 
 A motion picture major at the Brooks Institute of Photography, CA
-Santa Barbara and a foreign student from Kuala Lumpur, Malaysia.
+Santa Barbara and a foreign student frkindala Lumpur, Malaysia.
 
 "The mind is the forerunner of all states."
 
@@ -20051,14 +20089,14 @@ document_id: 52033
 From: Eric.Cronin@f174.n2240.z1.fidonet.org (Eric Cronin)
 Subject: PhoneNet questions
 
-My school is settinÿûg up a new network with bothe Macs and Apple II's.  I'm
-used to ethernet, and don't know muÿch about LocalTalk.  Two things:  first,
-in MacWherehouse, btheÿy have PowerUser network connectors, and the caption
-leads you to belÿûieve that you can plug them into the phone lines in the
+My school is settinï¿½ï¿½g up a new network with bothe Macs and Apple II's.  I'm
+used to ethernet, and don't know muï¿½ch about LocalTalk.  Two things:  first,
+in MacWherehouse, btheï¿½y have PowerUser network connectors, and the caption
+leads you to belï¿½ï¿½ieve that you can plug them into the phone lines in the
 building and have them work.  Is this true?  I've seen it done by running
-sepÿerate phone cords, but never with real lines.  Second, if that does work,
-could you use a modem ÿhooked up to that same line while the network was
-active?  Help would be greatly appriciated.  BTW-ÿ’running seperate phone line 
+sepï¿½erate phone cords, but never with real lines.  Second, if that does work,
+could you use a modem ï¿½hooked up to that same line while the network was
+active?  Help would be greatly appriciated.  BTW-ï¿½ï¿½running seperate phone line 
 is out of the question, the network wil  VERRY spread o.
 
 EriCronin
@@ -23337,7 +23375,7 @@ rotational speed. This utility should let you know what the differences are
 between the drives.
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
@@ -23359,7 +23397,7 @@ Deskwriter using sys7.1 and HP driver 3.1
 Tony
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
@@ -24225,7 +24263,7 @@ the CPU is clocked at 25MHz.
 I guess a board designed for the LCIII can get a 25MHz clock from the
 extended PDS socket...
 --
-Real life:      Thomas Törnblom           Email:  Thomas.Tornblom@Nexus.Comm.SE
+Real life:      Thomas Tï¿½rnblom           Email:  Thomas.Tornblom@Nexus.Comm.SE
 Snail mail:     Communicator Nexus AB     Phone:  +46 18 171814
                 Box 857                   Fax:    +46 18 696516
                 S - 751 08 Uppsala, Sweden
@@ -27743,7 +27781,7 @@ From: jmilhoan@magnus.acs.ohio-state.edu (JT)
 Subject: Re: MACINTOSH WEENIES SUCK SCSI DISKS!!!
 
 > Unknown Class User writes:
-
+kind
 [snip]
 
 > I think the subject title says it all. Anybody that relies on a SCSI dick
@@ -29502,7 +29540,7 @@ phase (lower Voltage).
 So you can do following if you are used to such technical terms.
 1) Clean all mentioned contacts with contact spray
 2) readjust the 5 Volt level of your powersupply
-3) use a calm fan and think of preventing dust blowinÔ through the floppy!
+3) use a calm fan and think of preventing dust blowinï¿½ through the floppy!
    (a fixed piece of paper can prevent this)
 if you don't know how to do it beg a friendly technician!
 
@@ -34240,7 +34278,7 @@ just wondering...
 
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
@@ -34255,13 +34293,13 @@ each simm. In the case of the LC III, it only has one simm slot, but accesses wi
 be 32 bits wides.
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
 Newsgroup: comp.sys.mac.hardware
 Document_id: 51593
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: Interesting ADB behaviour on C650
 
 In <1993Apr16.091202.15500@waikato.ac.nz> ldo@waikato.ac.nz (Lawrence D'Oliveiro, Waikato University) writes:
@@ -34290,7 +34328,7 @@ Cheers,
 
 Newsgroup: comp.sys.mac.hardware
 Document_id: 51594
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: What is "ROM accelerated video"?
 
 In <1qknuq$9ut@agate.berkeley.edu> c60b-3jl@web-4f.berkeley.edu (James Wang) writes:
@@ -42273,7 +42311,7 @@ Real easy to install, but it does require some soldering.
 
 Newsgroup: comp.sys.mac.hardware
 Document_id: 51865
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: Whither QuickDraw Performance (across product line)
 
 In <daves-190493121505@129.228.20.182> daves@xetron.com (Dave Steele) writes:
@@ -43401,7 +43439,7 @@ like SIMM memory check}, or a dozen or so different types of memory boards.
 
 HD Interfaces {limited to hard drives by design or lack of development}: 
 MFM:  Modified Frequency Modulation, RLL:  Run Length Limited
- only used with smaller [² 60mb] hard drives.
+ only used with smaller [ï¿½ 60mb] hard drives.
 IDE:  Integrated Device Electronics 
  Asynchronous {~5MB/s max} and synchronous {8.3MB/s max} transfer.
  currently the most common standard, and is mainly used for medium sized 
@@ -43779,10 +43817,48 @@ Document_id: 51894
 From: Mikael Fredriksson <Mikael.Fredriksson@macexchange.se>
 Subject: RE-Re: Quadra SCSI Problems???
 
- In article <C5L39p.2qz@news.udel.edu>, johnston@me.udel.edu (Bill Johnston) writes:|> In article <1993Apr16.144750.1568@mintaka.lcs.mit.edu> nodine@lcs.mit.edu (Mark H. Nodine) writes:|> >I don't know about the specific problem mentioned in your|> >message, but I definitely had SCSI problems between my|> >Q700 and my venerable Jasmine Megadrive 10 cartridge|> >drives.  My solution was to get Silverlining.  None of|> >the loops that involved blind writes worked to the drives;
-op that worked was the "Macintosh|> >Software" loop (whatever that means).|> |> I doubt this is a Quadra-specific problem.  I had to get|> rid of my "venerable" Bernoulli 20 last year (with enough |> cartridges purchased at ~$90 each to make the whole thing |> worth more than my whole computer ;).  The tech support guys|> at Ocean Microsystems suggested that some third-party drivers |> might fix the problem - in my case the cartridges wouldn't |> format/mount/partition for A/UX.  
-hat the Megadrives worked perfectly on both myMac Plus and my Powerbook 140.  It was for this reason I assumedthe problem had something to do with the Quadra.  Even with theQuadra, they mostly worked OK.  The problem occurred when I ejecteda cartridge from a drive: it would start popping up dialog boxessaying "This cartridge must be formatted with Jasmine Driveware"even though there was no cartridge in the drive.	--Mark
-t to format) I have this confirmed from Apple Computer in Sweden (I work for a Apple dealer as a service tech). We had problems that Quadras wanted to format a diskette or a Syquest when ther was nothing in the drive. This problem was fixed sytem 7.1Mikael Fredriksson-------------------------------------------------email: mikael_fredriksson@macexchange.seMac Exchange BBSPL 3813S-437 92 LindomeSwedenBBS +46-31-948290 (5 lines)FAX +46-31-948294FIDO 2:203/211  
+ 
+In article <C5L39p.2qz@news.udel.edu>, johnston@me.udel.edu (Bill Johnston) writes:
+|> In article <1993Apr16.144750.1568@mintaka.lcs.mit.edu> nodine@lcs.mit.edu (Mark H. Nodine) writes:
+|> >I don't know about the specific problem mentioned in your
+|> >message, but I definitely had SCSI problems between my
+|> >Q700 and my venerable Jasmine Megadrive 10 cartridge
+|> >drives.  My solution was to get Silverlining.  None of
+|> >the loops that involved blind writes worked to the drives;
+op that worked was the "Macintosh
+|> >Software" loop (whatever that means).
+|> 
+|> I doubt this is a Quadra-specific problem.  I had to get
+|> rid of my "venerable" Bernoulli 20 last year (with enough 
+|> cartridges purchased at ~$90 each to make the whole thing 
+|> worth more than my whole computer ;).  The tech support guys
+|> at Ocean Microsystems suggested that some third-party drivers 
+|> might fix the problem - in my case the cartridges wouldn't 
+|> format/mount/partition for A/UX.  
+hat the Megadrives worked perfectly on both my
+Mac Plus and my Powerbook 140.  It was for this reason I assumed
+the problem had something to do with the Quadra.  Even with the
+Quadra, they mostly worked OK.  The problem occurred when I ejected
+a cartridge from a drive: it would start popping up dialog boxes
+saying "This cartridge must be formatted with Jasmine Driveware"
+even though there was no cartridge in the drive.
+
+	--Mark
+t to format) I have this confirmed from Apple Computer in Sweden (I work for a Apple dealer as a service tech). We had problems that Quadras wanted to format a diskette or a Syquest when ther was nothing in the drive. This problem was fixed sytem 7.1
+
+Mikael Fredriksson
+
+-------------------------------------------------
+email: mikael_fredriksson@macexchange.se
+
+Mac Exchange BBS
+PL 3813
+S-437 92 Lindome
+Sweden
+BBS +46-31-948290 (5 lines)
+FAX +46-31-948294
+FIDO 2:203/211
+  
 <Disclaimer: Mac Exchange BBS cannot be held responsible for the contents of this message>
 
 Newsgroup: comp.sys.mac.hardware
@@ -44032,7 +44108,7 @@ Subject: Re: Quadra SCSI Problems???
 To the best of my knowledge there aren't any problems with Quadras and
 blind transfers.  Trouble with blind transfers usually means the programmer
 screwed up the TIBs or didn't test their driver with the device in question.
-Well designed TIBs poll or loop at every point where delays of >16µsec occur.
+Well designed TIBs poll or loop at every point where delays of >16ï¿½sec occur.
 This usually occurs at the first byte of each block of a transfer but some
 devices can "hiccup" in the middle of blocks.  If this happens in the middle
 of a blind transfer there is the possibility of losing or gaining a byte
@@ -44277,7 +44353,7 @@ unless you can live with mono.
 
 Newsgroup: comp.sys.mac.hardware
 Document_id: 51916
-From: d88-jwa@eufrat.nada.kth.se (Jon Wätte)
+From: d88-jwa@eufrat.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: x86 ~= 680x0 ?? (How do they compare?)
 
 In <rayC5rpxB.AK8@netcom.com> ray@netcom.com (Ray Fischer) writes:
@@ -44301,7 +44377,7 @@ Cheers,
 
 Newsgroup: comp.sys.mac.hardware
 Document_id: 51917
-From: d88-jwa@eufrat.nada.kth.se (Jon Wätte)
+From: d88-jwa@eufrat.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: SE rom
 
 In <1993Apr20.085651.1@mrl.dsto.gov.au> ryanph@mrl.dsto.gov.au writes:
@@ -44823,7 +44899,7 @@ Jim Pyke
 
 Newsgroup: comp.sys.mac.hardware
 Document_id: 51941
-From: d88-jwa@hemul.nada.kth.se (Jon Wätte)
+From: d88-jwa@hemul.nada.kth.se (Jon Wï¿½tte)
 Subject: Re: Why the drive speeds differ??
 
 In <C5r70z.4GB@zimmer.CSUFresno.EDU> mmatteo@mondrian.CSUFresno.EDU (Marc Matteo) writes:
@@ -45996,7 +46072,7 @@ In article <1r1a5vINNt3d@senator-bedfellow.MIT.EDU>, cam@athena.mit.edu
 > 
 > Someone mentioned a while ago that the Duos were scheduled for a 
 > 10-18% price reduction, according to 'newsbytes'.  Is this definite?
-> Does anyone know when it will take effect?  And what is 'newsbytes'?
+> Does anyone know when it will take kindt?  And what is 'newsbytes'?
 
 
 Local LA stores have already reduced prices by $200 on most Duo
@@ -47771,7 +47847,7 @@ at the lightness of it, I was kinda shocked at the flimsiness of the
 screen. I'm sure it'd break real easy....
 >>
 >> (Sorry, but other than my Trinitron, everything else I've ever bought from
->> Sony has failed. Why did I keep trying? Because I'm 'tupid.)
+>> Sony has failed. Why did I keep trykindBecause I'm 'tupid.)
 >
 >Aw, c'mon. I've got a Sony VCR, a Sony TV (both must be over two years old by
 >now), a Sony camcorder (five months old?), and of course an Apple 13" RGB
@@ -48337,14 +48413,14 @@ Document_id: 52033
 From: Eric.Cronin@f174.n2240.z1.fidonet.org (Eric Cronin)
 Subject: PhoneNet questions
 
-My school is settinÿûg up a new network with bothe Macs and Apple II's.  I'm
-used to ethernet, and don't know muÿch about LocalTalk.  Two things:  first,
-in MacWherehouse, btheÿy have PowerUser network connectors, and the caption
-leads you to belÿûieve that you can plug them into the phone lines in the
+My school is settinï¿½ï¿½g up a new network with bothe Macs and Apple II's.  I'm
+used to ethernet, and don't know muï¿½ch about LocalTalk.  Two things:  first,
+in MacWherehouse, btheï¿½y have PowerUser network connectors, and the caption
+leads you to belï¿½ï¿½ieve that you can plug them into the phone lines in the
 building and have them work.  Is this true?  I've seen it done by running
-sepÿerate phone cords, but never with real lines.  Second, if that does work,
-could you use a modem ÿhooked up to that same line while the network was
-active?  Help would be greatly appriciated.  BTW-ÿ’running seperate phone line 
+sepï¿½erate phone cords, but never with real lines.  Second, if that does work,
+could you use a modem ï¿½hooked up to that same line while the network was
+active?  Help would be greatly appriciated.  BTW-ï¿½ï¿½running seperate phone line 
 is out of the question, the network wil  VERRY spread o.
 
 EriCronin
@@ -51623,7 +51699,7 @@ rotational speed. This utility should let you know what the differences are
 between the drives.
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
@@ -51645,7 +51721,7 @@ Deskwriter using sys7.1 and HP driver 3.1
 Tony
 ***************************************************************************
  The views expressed in this posting those of the individual author only. 
-[BBS Number:(613) 848-1346      MacContent is VictoriaÕs first Iconic BBS!]
+[BBS Number:(613) 848-1346      MacContent is Victoriaï¿½s first Iconic BBS!]
 ***************************************************************************
 
 
@@ -52511,7 +52587,7 @@ the CPU is clocked at 25MHz.
 I guess a board designed for the LCIII can get a 25MHz clock from the
 extended PDS socket...
 --
-Real life:      Thomas Törnblom           Email:  Thomas.Tornblom@Nexus.Comm.SE
+Real life:      Thomas Tï¿½rnblom           Email:  Thomas.Tornblom@Nexus.Comm.SE
 Snail mail:     Communicator Nexus AB     Phone:  +46 18 171814
                 Box 857                   Fax:    +46 18 696516
                 S - 751 08 Uppsala, Sweden
@@ -55991,7 +56067,7 @@ rhn@netcom.com, rhn@sigm.com, N6YWU, (408)296-7535
 #include <cannonical.disclaimer>
 
 Newsgroup: comp.sys.mac.hardware
-Document_id: 52347
+Document_id: 523kind
 Subject: Re: What's that chime?
 From: brecher@husc8.harvard.edu (Jonathan Brecher)
 

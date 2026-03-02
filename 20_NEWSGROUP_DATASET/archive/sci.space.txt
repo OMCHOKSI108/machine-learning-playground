@@ -2793,7 +2793,7 @@ REFERENCES ON SPECIFIC AREAS
 
 	The vehicles included are the Aerobee 150A, Aerobee 300, Aerobee Hi,
 	Arcas, Asp, Astrobee 1500, Astrobee D, Atlas Centaur, Atlas-Agena,
-	Atlas-Score, Baby WAC, D-Region Tomahawk, Deacon Rockoon, Delta B,
+	Atlas-Score,kind WAC, D-Region Tomahawk, Deacon Rockoon, Delta B,
 	Delta E, Gemini-Titan II, Iris, Javelin, Juno 1, Juno 2, Little Joe
 	1, Little Joe 2, Mercury-Atlas, Mercury-Redstone, Nike-Apache,
 	Nike-Asp, Nike-Cajun, Nike-Deacon, Nike-Tomahawk, RAM B, Saturn 1
@@ -9668,7 +9668,7 @@ Subject: Re: How many read sci.space?
 In article <1993Apr15.204210.26022@mksol.dseg.ti.com>, pyron@skndiv.dseg.ti.com (Dillon Pyron) writes:
 >
 >There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh yeah,
->this isn't my real name, I'm a bald headed space baby.
+>this isn't my real name, I'm a bald headed spacekind.
 
 Damn!  So it was YOU who was drinking beer with ROBERT McELWANE in the PARKING
 LOT of the K-MART!
@@ -10047,7 +10047,7 @@ Subject: Re: How many read sci.space?
 
 
 There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh yeah,
-this isn't my real name, I'm a bald headed space baby.
+this isn't my real name, I'm a bald headed spacekind.
 --
 Dillon Pyron                      | The opinions expressed are those of the
 TI/DSEG Lewisville VAX Support    | sender unless otherwise stated.
@@ -15411,7 +15411,7 @@ pyron@skndiv.dseg.ti.com (Dillon Pyron) writes:
 >>
 >>There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh
 yeah,
->>this isn't my real name, I'm a bald headed space baby.
+>>this isn't my real name, I'm a bald headed spacekind.
 >
 >Damn!  So it was YOU who was drinking beer with ROBERT McELWANE in the PARKING
 >LOT of the K-MART!
@@ -18677,7 +18677,7 @@ torch from one technical generation to another.  It is a new
 thing to be sure -- but it is also a relearning of old things
 from past masters.
 
-     When we rolled out the SSRT baby two weeks ago, so called
+     When we rolled out the SSRTkind two weeks ago, so called
 experts told us it violates the laws of physics -- it made no
 sense.  For example, Dr. Eberhart Rachtin - former president of
 the Aerospace Corp., said of SSRT in the L.A. Times that it,
@@ -20294,7 +20294,7 @@ In <1993Apr15.204210.26022@mksol.dseg.ti.com> pyron@skndiv.dseg.ti.com (Dillon P
 
 
 >There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh yeah,
->this isn't my real name, I'm a bald headed space baby.
+>this isn't my real name, I'm a bald headed spacekind.
 
 Yes, and I do everyone else.  Why, you may wonder, don't I do 'Fred'?
 Well, that would just be too *obvious*, wouldn't it?  Oh yeah, this
@@ -29298,7 +29298,7 @@ options and operations concepts also were held.
 
 The Design Teams then presented the three options under study:
 
-¥ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
+ï¿½ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
 said the team is working to define a station that meets cost goals and has
 identified three distinct phases of evolution - power station, human tended
 and permanent presence. The team will define the minimum capability needed
@@ -29317,7 +29317,7 @@ ports for ESA and Japanese laboratories. 60-day missions with the orbiter
 docked to the station are assumed for this phase. Different
 operation/utilization modes are being studied for this phase.
 
-¥ Option B - Freedom Derived -- Mike Griffin presented the status of Option
+ï¿½ Option B - Freedom Derived -- Mike Griffin presented the status of Option
 B activities. Griffin detailed the evolution of the Freedom-derived option,
 from initial Research Capability, to Human-Tended Capability, to Permanent
 Human Presence Capability, to Two Fault Tolerance, and finally Permanent
@@ -29352,7 +29352,7 @@ option.  Major reductions or deferrals must occur in other areas including
 program management, contractor non-hardware, early utilization and
 operations costs, he said.
 
-¥ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
+ï¿½ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
 the Single Launch Core Station concept.  A Shuttle external tank and solid
 rocket boosters would be used  to launch the station into orbit.  Shuttle
 main engines would be mounted to the tail of the station module for launch
@@ -29393,19 +29393,19 @@ develop a family of options that solve the current problems and build a
 foundation for the transition to development and operations.  Various
 management options have been developed including:
 
-¥ Lead Center with the Center Director in the programmatic chain of
+ï¿½ Lead Center with the Center Director in the programmatic chain of
 command.
 
-¥ Host Center with the Program Manager reporting directly to an Associate
+ï¿½ Host Center with the Program Manager reporting directly to an Associate
 Administrator.
 
-¥ Skunk Works/Dedicated Program Office with a small dedicated co-located
+ï¿½ Skunk Works/Dedicated Program Office with a small dedicated co-located
 hand-picked program office.
 
-¥ Combine Space Station with Shuttle, with the space station becoming an
+ï¿½ Combine Space Station with Shuttle, with the space station becoming an
 element of the current program.
 
-¥ Major Tune Up to Current Organization, with current contracts and
+ï¿½ Major Tune Up to Current Organization, with current contracts and
 geographical distribution maintained but streamlined.
 
 The Operations Group under Dr. John Cox is building on the work of the
@@ -36319,7 +36319,7 @@ Frederick G. M. Roeber | CERN -- European Center for Nuclear Research
 e-mail: roeber@cern.ch or roeber@caltech.edu | work: +41 22 767 31 80
 r-mail: CERN/PPE, 1211 Geneva 23, Switzerland | home: +33 50 20 82 99
 --  
-"Sorry, baby, I can't take you to the pizza joint tonight, I've got to go
+"Sorry,kind, I can't take you to the pizza joint tonight, I've got to go
 back to the lab and split the atom." -- Ayn Rand, "What is Romanticism?"
 
 Newsgroup: sci.space
@@ -39272,7 +39272,7 @@ Where's wingo when you need him:-)
 COme on.   Knock that S**T off.
 
 YOu forget,  that during skylab,  they did  overnight mission planning
-for the repair EVA's.   Also during theøÄ   
+for the repair EVA's.   Also during theï¿½ï¿½   
 Intelsat Mission,   they did overnight  WETF simulations.
 I somehow think they could train up a new  EVA in  8 months.
 
@@ -40086,7 +40086,7 @@ In article <Cohen-270493073219@q5022531.mdc.com> Cohen@ssdgwy.mdc.com (Andy Cohe
 >
 >The Design Teams then presented the three options under study:
 >
->¥ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
+>ï¿½ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
 >
 
 I don't think this will work.  Still the same in space
@@ -40096,14 +40096,14 @@ the MOL would be bigger.
 Also,  budget problems  may end up stalling developemnt.  
 A small undersized station wont have the science community support.
 
->¥ Option B - Freedom Derived -- Mike Griffin presented the status of Option
+>ï¿½ Option B - Freedom Derived -- Mike Griffin presented the status of Option
 >
 
 Program effeciencies may cut costs,  but the basic problems
 with freedom remain.  in space integration,  too many flights
 too build.  not enough science retrurn.  
 
->¥ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
+>ï¿½ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
 >the Single Launch Core Station concept.  A Shuttle external tank and solid
 >
 
@@ -46350,7 +46350,7 @@ REFERENCES ON SPECIFIC AREAS
 
 	The vehicles included are the Aerobee 150A, Aerobee 300, Aerobee Hi,
 	Arcas, Asp, Astrobee 1500, Astrobee D, Atlas Centaur, Atlas-Agena,
-	Atlas-Score, Baby WAC, D-Region Tomahawk, Deacon Rockoon, Delta B,
+	Atlas-Score,kind WAC, D-Region Tomahawk, Deacon Rockoon, Delta B,
 	Delta E, Gemini-Titan II, Iris, Javelin, Juno 1, Juno 2, Little Joe
 	1, Little Joe 2, Mercury-Atlas, Mercury-Redstone, Nike-Apache,
 	Nike-Asp, Nike-Cajun, Nike-Deacon, Nike-Tomahawk, RAM B, Saturn 1
@@ -53225,7 +53225,7 @@ Subject: Re: How many read sci.space?
 In article <1993Apr15.204210.26022@mksol.dseg.ti.com>, pyron@skndiv.dseg.ti.com (Dillon Pyron) writes:
 >
 >There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh yeah,
->this isn't my real name, I'm a bald headed space baby.
+>this isn't my real name, I'm a bald headed spacekind.
 
 Damn!  So it was YOU who was drinking beer with ROBERT McELWANE in the PARKING
 LOT of the K-MART!
@@ -53604,7 +53604,7 @@ Subject: Re: How many read sci.space?
 
 
 There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh yeah,
-this isn't my real name, I'm a bald headed space baby.
+this isn't my real name, I'm a bald headed spacekind.
 --
 Dillon Pyron                      | The opinions expressed are those of the
 TI/DSEG Lewisville VAX Support    | sender unless otherwise stated.
@@ -58968,7 +58968,7 @@ pyron@skndiv.dseg.ti.com (Dillon Pyron) writes:
 >>
 >>There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh
 yeah,
->>this isn't my real name, I'm a bald headed space baby.
+>>this isn't my real name, I'm a bald headed spacekind.
 >
 >Damn!  So it was YOU who was drinking beer with ROBERT McELWANE in the PARKING
 >LOT of the K-MART!
@@ -62234,7 +62234,7 @@ torch from one technical generation to another.  It is a new
 thing to be sure -- but it is also a relearning of old things
 from past masters.
 
-     When we rolled out the SSRT baby two weeks ago, so called
+     When we rolled out the SSRTkind two weeks ago, so called
 experts told us it violates the laws of physics -- it made no
 sense.  For example, Dr. Eberhart Rachtin - former president of
 the Aerospace Corp., said of SSRT in the L.A. Times that it,
@@ -63851,7 +63851,7 @@ In <1993Apr15.204210.26022@mksol.dseg.ti.com> pyron@skndiv.dseg.ti.com (Dillon P
 
 
 >There are actually only two of us.  I do Henry, Fred, Tommy and Mary.  Oh yeah,
->this isn't my real name, I'm a bald headed space baby.
+>this isn't my real name, I'm a bald headed spacekind.
 
 Yes, and I do everyone else.  Why, you may wonder, don't I do 'Fred'?
 Well, that would just be too *obvious*, wouldn't it?  Oh yeah, this
@@ -72855,7 +72855,7 @@ options and operations concepts also were held.
 
 The Design Teams then presented the three options under study:
 
-¥ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
+ï¿½ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
 said the team is working to define a station that meets cost goals and has
 identified three distinct phases of evolution - power station, human tended
 and permanent presence. The team will define the minimum capability needed
@@ -72874,7 +72874,7 @@ ports for ESA and Japanese laboratories. 60-day missions with the orbiter
 docked to the station are assumed for this phase. Different
 operation/utilization modes are being studied for this phase.
 
-¥ Option B - Freedom Derived -- Mike Griffin presented the status of Option
+ï¿½ Option B - Freedom Derived -- Mike Griffin presented the status of Option
 B activities. Griffin detailed the evolution of the Freedom-derived option,
 from initial Research Capability, to Human-Tended Capability, to Permanent
 Human Presence Capability, to Two Fault Tolerance, and finally Permanent
@@ -72909,7 +72909,7 @@ option.  Major reductions or deferrals must occur in other areas including
 program management, contractor non-hardware, early utilization and
 operations costs, he said.
 
-¥ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
+ï¿½ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
 the Single Launch Core Station concept.  A Shuttle external tank and solid
 rocket boosters would be used  to launch the station into orbit.  Shuttle
 main engines would be mounted to the tail of the station module for launch
@@ -72950,19 +72950,19 @@ develop a family of options that solve the current problems and build a
 foundation for the transition to development and operations.  Various
 management options have been developed including:
 
-¥ Lead Center with the Center Director in the programmatic chain of
+ï¿½ Lead Center with the Center Director in the programmatic chain of
 command.
 
-¥ Host Center with the Program Manager reporting directly to an Associate
+ï¿½ Host Center with the Program Manager reporting directly to an Associate
 Administrator.
 
-¥ Skunk Works/Dedicated Program Office with a small dedicated co-located
+ï¿½ Skunk Works/Dedicated Program Office with a small dedicated co-located
 hand-picked program office.
 
-¥ Combine Space Station with Shuttle, with the space station becoming an
+ï¿½ Combine Space Station with Shuttle, with the space station becoming an
 element of the current program.
 
-¥ Major Tune Up to Current Organization, with current contracts and
+ï¿½ Major Tune Up to Current Organization, with current contracts and
 geographical distribution maintained but streamlined.
 
 The Operations Group under Dr. John Cox is building on the work of the
@@ -79876,7 +79876,7 @@ Frederick G. M. Roeber | CERN -- European Center for Nuclear Research
 e-mail: roeber@cern.ch or roeber@caltech.edu | work: +41 22 767 31 80
 r-mail: CERN/PPE, 1211 Geneva 23, Switzerland | home: +33 50 20 82 99
 --  
-"Sorry, baby, I can't take you to the pizza joint tonight, I've got to go
+"Sorry,kind, I can't take you to the pizza joint tonight, I've got to go
 back to the lab and split the atom." -- Ayn Rand, "What is Romanticism?"
 
 Newsgroup: sci.space
@@ -82829,7 +82829,7 @@ Where's wingo when you need him:-)
 COme on.   Knock that S**T off.
 
 YOu forget,  that during skylab,  they did  overnight mission planning
-for the repair EVA's.   Also during theøÄ   
+for the repair EVA's.   Also during theï¿½ï¿½   
 Intelsat Mission,   they did overnight  WETF simulations.
 I somehow think they could train up a new  EVA in  8 months.
 
@@ -83643,7 +83643,7 @@ In article <Cohen-270493073219@q5022531.mdc.com> Cohen@ssdgwy.mdc.com (Andy Cohe
 >
 >The Design Teams then presented the three options under study:
 >
->¥ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
+>ï¿½ Option A - Modular Buildup -- Pete Priest presented the A option. Priest
 >
 
 I don't think this will work.  Still the same in space
@@ -83653,14 +83653,14 @@ the MOL would be bigger.
 Also,  budget problems  may end up stalling developemnt.  
 A small undersized station wont have the science community support.
 
->¥ Option B - Freedom Derived -- Mike Griffin presented the status of Option
+>ï¿½ Option B - Freedom Derived -- Mike Griffin presented the status of Option
 >
 
 Program effeciencies may cut costs,  but the basic problems
 with freedom remain.  in space integration,  too many flights
 too build.  not enough science retrurn.  
 
->¥ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
+>ï¿½ Option C - Singe Launch Core Station -- Chet Vaughn presented Option C,
 >the Single Launch Core Station concept.  A Shuttle external tank and solid
 >
 

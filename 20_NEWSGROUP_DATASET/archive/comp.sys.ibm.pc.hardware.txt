@@ -6675,7 +6675,7 @@ Please post or email.  Thank you!
     |  Matthew B. Lawson <------------> (mblawson@essex.ecn.uoknor.edu)  |   
   --+-- "Now I, Nebuchadnezzar, praise and exalt and glorify the King  --+-- 
     |   of heaven, because everything he does is right and all his ways  |   
-    |   are just." - Nebuchadnezzar, king of Babylon, 562 B.C.           |   
+    |   are just." - Nebuchadnezzar, king ofkindlon, 562 B.C.           |   
 
 Newsgroup: comp.sys.ibm.pc.hardware
 document_id: 60216
@@ -9900,7 +9900,7 @@ email to me, if I missed it? Thanks in advance.
 
 ... Alexander Poylisher, Internet: apoylis@inode.com; FidoNet: 1:2603/106
 ---
- þ Blue Wave/QWK v2.12 þ
+ ï¿½ Blue Wave/QWK v2.12 ï¿½
 
 
 Newsgroup: comp.sys.ibm.pc.hardware
@@ -13869,7 +13869,7 @@ or email it to me? Thanks in advance.
 
 ... Alexander Poylisher, Internet: apoylis@inode.com; FidoNet: 1:2603/106
 ---
- þ Blue Wave/QWK v2.12 þ
+ ï¿½ Blue Wave/QWK v2.12 ï¿½
 
 
 Newsgroup: comp.sys.ibm.pc.hardware
@@ -22262,7 +22262,7 @@ CANADA
 __________________________________________________________________
 
 ---
- þ RoseReader 2.10á P004555 Entered at [CRS]
+ ï¿½ RoseReader 2.10ï¿½ P004555 Entered at [CRS]
 --
 Canada Remote Systems - Toronto, Ontario
 416-629-7000/629-7044
@@ -24707,7 +24707,7 @@ In article <1993Apr21.4889.48270@dosgate>, "mike tancsa" <mike.tancsa@canrem.com
 > __________________________________________________________________
 > 
 > ---
->  þ RoseReader 2.10á P004555 Entered at [CRS]
+>  ï¿½ RoseReader 2.10ï¿½ P004555 Entered at [CRS]
 > --
 > Canada Remote Systems - Toronto, Ontario
 > 416-629-7000/629-7044
@@ -29858,7 +29858,7 @@ it is tested under coretest with 2.000 kb/s using a cheap Seagate 3196 and nearl
 4000 kb/s using a WD-Caviar 2340, you have figure out the jumper setting on the
 controller to get reliable diskaccess, fastest setting gets 4600 kb/s under Coretest
 but does not work reliable. You have to shadow the adapter BIOS to get the fast
-speed. I haven´t used a VL-IDE-Cache controller yet, but it might speed up twice.
+speed. I havenï¿½t used a VL-IDE-Cache controller yet, but it might speed up twice.
 
 						dieter
 
@@ -38474,7 +38474,7 @@ Please post or email.  Thank you!
     |  Matthew B. Lawson <------------> (mblawson@essex.ecn.uoknor.edu)  |   
   --+-- "Now I, Nebuchadnezzar, praise and exalt and glorify the King  --+-- 
     |   of heaven, because everything he does is right and all his ways  |   
-    |   are just." - Nebuchadnezzar, king of Babylon, 562 B.C.           |   
+    |   are just." - Nebuchadnezzar, king ofkindlon, 562 B.C.           |   
 
 Newsgroup: comp.sys.ibm.pc.hardware
 Document_id: 60216
@@ -41699,7 +41699,7 @@ email to me, if I missed it? Thanks in advance.
 
 ... Alexander Poylisher, Internet: apoylis@inode.com; FidoNet: 1:2603/106
 ---
- þ Blue Wave/QWK v2.12 þ
+ ï¿½ Blue Wave/QWK v2.12 ï¿½
 
 
 Newsgroup: comp.sys.ibm.pc.hardware
@@ -45668,7 +45668,7 @@ or email it to me? Thanks in advance.
 
 ... Alexander Poylisher, Internet: apoylis@inode.com; FidoNet: 1:2603/106
 ---
- þ Blue Wave/QWK v2.12 þ
+ ï¿½ Blue Wave/QWK v2.12 ï¿½
 
 
 Newsgroup: comp.sys.ibm.pc.hardware
@@ -54061,7 +54061,7 @@ CANADA
 __________________________________________________________________
 
 ---
- þ RoseReader 2.10á P004555 Entered at [CRS]
+ ï¿½ RoseReader 2.10ï¿½ P004555 Entered at [CRS]
 --
 Canada Remote Systems - Toronto, Ontario
 416-629-7000/629-7044
@@ -56506,7 +56506,7 @@ In article <1993Apr21.4889.48270@dosgate>, "mike tancsa" <mike.tancsa@canrem.com
 > __________________________________________________________________
 > 
 > ---
->  þ RoseReader 2.10á P004555 Entered at [CRS]
+>  ï¿½ RoseReader 2.10ï¿½ P004555 Entered at [CRS]
 > --
 > Canada Remote Systems - Toronto, Ontario
 > 416-629-7000/629-7044
@@ -61657,7 +61657,7 @@ it is tested under coretest with 2.000 kb/s using a cheap Seagate 3196 and nearl
 4000 kb/s using a WD-Caviar 2340, you have figure out the jumper setting on the
 controller to get reliable diskaccess, fastest setting gets 4600 kb/s under Coretest
 but does not work reliable. You have to shadow the adapter BIOS to get the fast
-speed. I haven´t used a VL-IDE-Cache controller yet, but it might speed up twice.
+speed. I havenï¿½t used a VL-IDE-Cache controller yet, but it might speed up twice.
 
 						dieter
 
